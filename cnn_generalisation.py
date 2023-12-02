@@ -59,17 +59,3 @@ test_df.head()
 import os  
 train_df.to_csv(f'/home/zchua/thesis_code/{loss_fn.__name__}_train_df.csv')
 test_df.to_csv(f'/home/zchua/thesis_code/{loss_fn.__name__}_test_df.csv')
-
-for sizeQuantumData in rangeSizeQuantumData:
-  plt.scatter(np.repeat(sizeQuantumData, len(train_df[f'{sizeQuantumData}'])), train_df[f'{sizeQuantumData}'], c = 'g')
-  plt.scatter(np.repeat(sizeQuantumData, len(test_df[f'{sizeQuantumData}'])), test_df[f'{sizeQuantumData}'], c = 'g')
-  plt.scatter(sizeQuantumData, train_df[f'{sizeQuantumData}'].mean(), c = 'b', label = 'Train')
-  plt.scatter(sizeQuantumData, test_df[f'{sizeQuantumData}'].mean(), c = 'r', label = 'Test')
-plt.xlabel('sizeQuantumData')
-plt.ylabel('Fidelity')
-plt.title(f'Fidelity for 4-8-4 CNN (1-2-1 DQNN) after {numEpochs} epochs:\n testing fidelity (red), training fidelity (blue)')
-# plt.legend()
-plt.savefig(f'/home/zchua/thesis_code/plots/MSELoss_generalisation.pdf', bbox_inches='tight', dpi=300)
-
-# train_df.head()
-# plt.scatter(2, train_df[f'2'].mean())
