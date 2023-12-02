@@ -6,11 +6,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
 
-filename = '/home/zchua/thesis_code/MSELoss()_train_df.csv'
-train_df = pd.read_csv('/home/zchua/thesis_code/MSELoss()_train_df.csv')
-test_df = pd.read_csv('/home/zchua/thesis_code/MSELoss()_test_df.csv')
+trainFile = '/home/zchua/thesis_code/lossFidelityInverse_train_df.csv'
+testFile = '/home/zchua/thesis_code/lossFidelityInverse_test_df.csv'
+# trainFile = '/home/zchua/thesis_code/MSELoss()_train_df.csv'
+# testFile = '/home/zchua/thesis_code/MSELoss()_test_df.csv'
+train_df = pd.read_csv(trainFile)
+test_df = pd.read_csv(testFile)
 
-loss_fn = filename[len('/home/zchua/thesis_code/') : filename.find('_train_df.csv')]
+loss_fn = trainFile[len('/home/zchua/thesis_code/') : trainFile.find('_train_df.csv')]
+loss_fn
 numEpochs = 1000
 
 training_x = list(train_df)[1:]
@@ -29,5 +33,5 @@ plt.xlabel('sizeQuantumData')
 plt.ylabel('Fidelity')
 plt.title(f'Fidelity for 4-8-4 CNN (1-2-1 DQNN) after {numEpochs} epochs\nLoss = {loss_fn}')
 plt.legend()
-plt.savefig(f'/home/zchua/thesis_code/plots/MSELoss_generalisation.pdf', bbox_inches='tight', dpi=300)
+plt.savefig(f'/home/zchua/thesis_code/plots/{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)
 plt.close()

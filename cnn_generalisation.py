@@ -2,7 +2,7 @@
 
 from cnn_functions import *
 
-"""### We want to plot mean/media value of the fidelity vs sizeQuantumData
+"""We want to plot mean/media value of the fidelity vs sizeQuantumData
 
 0. Instantiate neural network
 1. Generate N quantum data training pairs
@@ -23,8 +23,8 @@ learningRate = 0.1
 numEpochs = 1000
 sizeTestData = 10
 # loss_fn = nn.MSELoss()
-loss_fn = lossFidelityInverse
-# loss_fn = lossPhysInformed
+# loss_fn = lossFidelityInverse
+loss_fn = lossPhysInformed
 # loss_fn = lossPhysInformed2
 
 # Making DataFrame to store values
@@ -53,8 +53,6 @@ for sizeQuantumData in rangeSizeQuantumData:
 
 train_df = pd.DataFrame(train_dict)
 test_df = pd.DataFrame(test_dict)
-
-test_df.head()
 
 import os  
 train_df.to_csv(f'/home/zchua/thesis_code/{loss_fn.__name__}_train_df.csv')

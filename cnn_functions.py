@@ -166,10 +166,6 @@ def lossPhysInformed2(preds, targets):
   return lossAverage(lossPhysInformed2_sub, preds, targets)
 
 """to-do
-* is the going down thing because of training, or not learning?
-* plot loss vs epochs for some N, like N = 15, 20, see if needs more epochs, or lower learning rate, or both?
- - with 1000 epochs, lr = 0.1, the test fidelity for N = 20 finally reached
-* make generalisation plots for the DQNN
 * mixed states
 * larger NNs
 * try density ops instead of states
