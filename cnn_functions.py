@@ -123,9 +123,9 @@ def trainModel(model, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTes
 """
 Loss(predicted output, training/testing output)
 1. MSELoss
-2. (1 - fidelity)^2 OR (1 - fidelity)?
-3. MSELoss + (1 - norm(predicted output))^2
-4. (1 - fidelity) + (1 - norm(predicted output))^2 OR (1 - fidelity)^2
+2. lossFidelityInverse = (1 - fidelity)
+3. lossPhysInformed = 0.9*MSELoss + 0.1*(1 - norm(predicted output))^2
+4. lossPhysInformed2 = 0.9*(1 - fidelity) + 0.1*(1 - norm(predicted output))^2 OR (1 - fidelity)^2
 """
 
 def norm(state):

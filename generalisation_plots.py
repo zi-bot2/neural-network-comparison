@@ -6,8 +6,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
 
-trainFile = '/home/zchua/thesis_code/lossFidelityInverse_train_df.csv'
-testFile = '/home/zchua/thesis_code/lossFidelityInverse_test_df.csv'
+trainFile = '/home/zchua/thesis_code/lossPhysInformed2_train_df.csv'
+testFile = '/home/zchua/thesis_code/lossPhysInformed2_test_df.csv'
+# trainFile = '/home/zchua/thesis_code/lossPhysInformed_train_df.csv'
+# testFile = '/home/zchua/thesis_code/lossPhysInformed_test_df.csv'
+# trainFile = '/home/zchua/thesis_code/lossFidelityInverse_train_df.csv'
+# testFile = '/home/zchua/thesis_code/lossFidelityInverse_test_df.csv'
 # trainFile = '/home/zchua/thesis_code/MSELoss()_train_df.csv'
 # testFile = '/home/zchua/thesis_code/MSELoss()_test_df.csv'
 train_df = pd.read_csv(trainFile)
@@ -18,12 +22,12 @@ loss_fn
 numEpochs = 1000
 
 training_x = list(train_df)[1:]
-training_y = [train_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in x]
-training_stds = [train_df[f'{sizeQuantumData}'].std() for sizeQuantumData in x]
+training_y = [train_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in training_x]
+training_stds = [train_df[f'{sizeQuantumData}'].std() for sizeQuantumData in training_x]
 
 testing_x = list(test_df)[1:]
-testing_y = [test_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in x]
-testing_stds = [test_df[f'{sizeQuantumData}'].std() for sizeQuantumData in x]
+testing_y = [test_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in training_x]
+testing_stds = [test_df[f'{sizeQuantumData}'].std() for sizeQuantumData in training_x]
 
 plt.scatter(testing_x, testing_y, label='test')
 plt.errorbar(testing_x, testing_y, yerr=testing_stds, fmt = 'o')

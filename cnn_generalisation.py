@@ -24,8 +24,8 @@ numEpochs = 1000
 sizeTestData = 10
 # loss_fn = nn.MSELoss()
 # loss_fn = lossFidelityInverse
-loss_fn = lossPhysInformed
-# loss_fn = lossPhysInformed2
+# loss_fn = lossPhysInformed
+loss_fn = lossPhysInformed2
 
 # Making DataFrame to store values
 train_dict = {}
