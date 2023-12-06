@@ -136,7 +136,7 @@ def norm(state):
   return norm
 
 def lossFidelityInverse_sub(pred, target):
-  return (1 - fidelityPureStates(pred, target))
+  return (1 - fidelityPureStates(pred, target))**2
 
 def lossPhysInformed_sub(pred, target):
   loss = nn.MSELoss()

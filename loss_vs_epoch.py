@@ -10,13 +10,13 @@ numQubits = 1
 qnnArch = [numQubits, 2, numQubits]
 inputsTrain, inputsTest, outputsTrain, outputsTest = makeQuantumData(sizeQuantumData, sizeTestData, qnnArch)
 
-learningRate = 0.1
-numEpochs = 2000
+learningRate = 0.05
+numEpochs = 1000
 cnn121 = NeuralNetwork121()
 cnn121 = NeuralNetwork121().to(device)
 optimizer = torch.optim.SGD(cnn121.parameters(), lr = learningRate)
-loss_fn = nn.MSELoss()
-# loss_fn = lossFidelityInverse
+# loss_fn = nn.MSELoss()
+loss_fn = lossFidelityInverse
 # loss_fn = lossPhysInformed
 # loss_fn = lossPhysInformed2
 
@@ -32,11 +32,10 @@ plt.plot(loss_dict['Epochs'], loss_dict['Training loss'], label = 'Training loss
 plt.plot(loss_dict['Epochs'], loss_dict['Testing loss'], label = 'Testing loss')
 plt.plot(loss_dict['Epochs'], loss_dict['Training fidelity'], label = 'Training fidelity')
 plt.plot(loss_dict['Epochs'], loss_dict['Testing fidelity'], label = 'Testing fidelity')
-plt.title(f'4-8-4 NN <=> {qnnArch} QNN \n Loss function = {loss_fn} \n sizeQuantumData = {sizeQuantumData} \n sizeTestData = {sizeTestData}')
+plt.title(f'4-8-4 NN <=> {qnnArch} QNN \n Loss function = {loss_fn.__name__} \n sizeQuantumData = {sizeQuantumData} \n sizeTestData = {sizeTestData}')
 plt.legend()
-# plt.ylim(top=1.5)
 plt.xlabel('Epoch')
-plt.savefig(f'/home/zchua/thesis_code/plots/{loss_fn}_performance.pdf', bbox_inches='tight', dpi=300)
+plt.savefig(f'/home/zchua/thesis_code/plots/{loss_fn.__name__}_performance.pdf', bbox_inches='tight', dpi=300)
 # plt.close()
 
 """## DQNN performance"""
