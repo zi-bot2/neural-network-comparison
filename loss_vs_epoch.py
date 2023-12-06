@@ -10,7 +10,7 @@ numQubits = 1
 qnnArch = [numQubits, 2, numQubits]
 inputsTrain, inputsTest, outputsTrain, outputsTest = makeQuantumData(sizeQuantumData, sizeTestData, qnnArch)
 
-learningRate = 0.05
+learningRate = 0.1
 numEpochs = 1000
 cnn121 = NeuralNetwork121()
 cnn121 = NeuralNetwork121().to(device)
@@ -36,7 +36,7 @@ plt.title(f'4-8-4 NN <=> {qnnArch} QNN \n Loss function = {loss_fn.__name__} \n 
 plt.legend()
 plt.xlabel('Epoch')
 plt.savefig(f'/home/zchua/thesis_code/plots/{loss_fn.__name__}_performance.pdf', bbox_inches='tight', dpi=300)
-# plt.close()
+plt.close()
 
 """## DQNN performance"""
 

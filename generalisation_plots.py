@@ -6,8 +6,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
 
-trainFile = '/home/zchua/thesis_code/lossPhysInformed2_train_df.csv'
-testFile = '/home/zchua/thesis_code/lossPhysInformed2_test_df.csv'
+trainFile = '/home/zchua/thesis_code/lossFidelityInverse2_train_df.csv'
+testFile = '/home/zchua/thesis_code/lossFidelityInverse2_test_df.csv'
+# trainFile = '/home/zchua/thesis_code/lossPhysInformed2_train_df.csv'
+# testFile = '/home/zchua/thesis_code/lossPhysInformed2_test_df.csv'
 # trainFile = '/home/zchua/thesis_code/lossPhysInformed_train_df.csv'
 # testFile = '/home/zchua/thesis_code/lossPhysInformed_test_df.csv'
 # trainFile = '/home/zchua/thesis_code/lossFidelityInverse_train_df.csv'

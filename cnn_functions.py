@@ -135,8 +135,8 @@ def norm(state):
 
   return norm
 
-def lossFidelityInverse_sub(pred, target):
-  return (1 - fidelityPureStates(pred, target))**2
+def lossFidelityInverse_sub(pred, target): # with square I called 'lossFidelityInverse2', without square just 'lossFidelityInverse'
+  return (1 - fidelityPureStates(pred, target))
 
 def lossPhysInformed_sub(pred, target):
   loss = nn.MSELoss()
