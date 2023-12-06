@@ -19,13 +19,13 @@ numQubits = 1
 qnnArch = [numQubits, 2, numQubits]
 
 # Training parameters
-learningRate = 0.1
+learningRate = 0.05
 numEpochs = 1000
 sizeTestData = 10
 # loss_fn = nn.MSELoss()
-# loss_fn = lossFidelityInverse
+loss_fn = lossFidelityInverse
 # loss_fn = lossPhysInformed
-loss_fn = lossPhysInformed2
+# loss_fn = lossPhysInformed2
 
 # Making DataFrame to store values
 train_dict = {}
@@ -55,5 +55,5 @@ train_df = pd.DataFrame(train_dict)
 test_df = pd.DataFrame(test_dict)
 
 import os  
-train_df.to_csv(f'/home/zchua/thesis_code/{loss_fn.__name__}_train_df.csv')
-test_df.to_csv(f'/home/zchua/thesis_code/{loss_fn.__name__}_test_df.csv')
+train_df.to_csv(f'/home/zchua/thesis_code/{loss_fn.__name__}2_train_df.csv')
+test_df.to_csv(f'/home/zchua/thesis_code/{loss_fn.__name__}2_test_df.csv')

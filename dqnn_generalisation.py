@@ -1,6 +1,7 @@
 """DQNN Generalisation"""
 
 from dqnn_functions import *
+from dqnn_functions_2 import *
 
 # Data specifications
 rangeSizeQuantumData = list(range(2, 21))

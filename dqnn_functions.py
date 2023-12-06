@@ -311,6 +311,72 @@ def qnnTraining(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds
     #Return
     return [plotlist, currentUnitaries]
 
+
+def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds):
+
+    # Split data into training and testing
+    trainingData = data[:numTrainingPairs]
+    testingData = data[numTrainingPairs : numTrainingPairs + numTestingPairs]
+
+    #### FEEDFORWARD
+    #Feedforward for given unitaries
+    s = 0
+    currentUnitaries = initialUnitaries
+    storedStates = feedforward(qnnArch, currentUnitaries, trainingData)
+    testStoredStates = feedforward(qnnArch, currentUnitaries, testingData)
+
+    #Cost calculation for given unitaries
+    outputStates = []
+    testOutputStates = []
+    
+    for k in range(len(storedStates)):
+        outputStates.append(storedStates[k][-1])
+        testOutputStates.append(testStoredStates[k][-1])
+    
+    plotlist = [[s], [costFunction(trainingData, outputStates)]]
+    testPlotlist = [[s], [costFunction(testingData, testOutputStates)]]
+
+    #Training of the Quantum Neural Network
+    for k in range(trainingRounds):
+        print("In training round "+str(k))
+
+        ### UPDATING
+        newUnitaries = unitariesCopy(currentUnitaries)
+
+        #Loop over layers:
+        for l in range(1, len(qnnArch)):
+            numInputQubits = qnnArch[l-1]
+            numOutputQubits = qnnArch[l]
+
+            #Loop over perceptrons
+            for j in range(numOutputQubits):
+                newUnitaries[l][j] = (makeUpdateMatrixTensored(qnnArch,currentUnitaries,trainingData,storedStates,lda,ep,l,j)* currentUnitaries[l][j])
+
+        ### FEEDFORWARD
+        #Feedforward for given unitaries
+        s = s + ep
+        currentUnitaries = newUnitaries
+        storedStates = feedforward(qnnArch, currentUnitaries, trainingData)
+        testStoredStates = feedforward(qnnArch, currentUnitaries, testingData)
+
+        #Cost calculation for given unitaries
+        outputStates = []
+        testOutputStates = []
+        
+        for m in range(len(storedStates)):
+            outputStates.append(storedStates[m][-1])
+            testOutputStates.append(testStoredStates[m][-1])
+        
+        plotlist[0].append(s)
+        plotlist[1].append(costFunction(trainingData, outputStates))
+
+        testPlotlist[0].append(s)
+        testPlotlist[1].append(costFunction(testingData, testOutputStates))
+
+    #Return
+    return [plotlist, testPlotlist, currentUnitaries]
+
+
 def boundRand(D, N, n):
     return (n/N) + (N-n)/(N*D*(D+1)) * (D + min(n**2+1, D**2))
 
