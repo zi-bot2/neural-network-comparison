@@ -138,12 +138,12 @@ def randomNetwork(qnnArch, numTrainingPairs):
     #Return
     return (qnnArch, networkUnitaries, networkTrainingData, networkUnitary)
 
-def costFunction(trainingData, outputStates):
+def costFunction(inputData, outputStates):
     costSum = 0
-    for i in range(len(trainingData)):
-        costSum += trainingData[i][1].dag() * outputStates[i] * trainingData[i][1]
+    for i in range(len(inputData)):
+        costSum += inputData[i][1].dag() * outputStates[i] * inputData[i][1]
 
-    return costSum.tr()/len(trainingData)
+    return costSum.tr()/len(inputData)
 
 def makeLayerChannel(qnnArch, unitaries, l, inputState):
     numInputQubits = qnnArch[l-1]
@@ -331,6 +331,8 @@ def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTes
     
     for k in range(len(storedStates)):
         outputStates.append(storedStates[k][-1])
+
+    for k in range(len(testStoredStates)):
         testOutputStates.append(testStoredStates[k][-1])
     
     plotlist = [[s], [costFunction(trainingData, outputStates)]]
@@ -371,7 +373,8 @@ def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTes
         plotlist[1].append(costFunction(trainingData, outputStates))
 
         testPlotlist[0].append(s)
-        testPlotlist[1].append(costFunction(testingData, testOutputStates))
+        print(len(testOutputStates))
+        # testPlotlist[1].append(costFunction(testingData, testOutputStates))
 
     #Return
     return [plotlist, testPlotlist, currentUnitaries]
@@ -380,26 +383,6 @@ def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTes
 def boundRand(D, N, n):
     return (n/N) + (N-n)/(N*D*(D+1)) * (D + min(n**2+1, D**2))
 
-# def subsetTrainingAvg(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds, iterations, n, alertIt=0):
-#     costpoints = []
-
-#     for i in range(iterations):
-#         if alertIt>0 and i%alertIt==0: print("n="+str(n)+", i="+str(i))
-
-#         #Prepare subset for training
-#         trainingSubset = sample(trainingData, n)
-
-#         #Train with the subset
-#         learnedUnitaries = qnnTraining(qnnArch, initialUnitaries, trainingSubset, lda, ep, trainingRounds)[1]
-#         storedStates = feedforward(qnnArch, learnedUnitaries, trainingData)
-#         outputStates = []
-#         for k in range(len(storedStates)):
-#             outputStates.append(storedStates[k][-1])
-
-#         #Calculate cost with all training data
-#         costpoints.append(costFunction(trainingData, outputStates))
-
-#     return sum(costpoints)/len(costpoints)
 
 def subsetTrainingAvg(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds, iterations, n, alertIt=0):
     costpoints = []
@@ -421,6 +404,15 @@ def subsetTrainingAvg(qnnArch, initialUnitaries, trainingData, lda, ep, training
         costpoints.append(costFunction(trainingData, outputStates))
 
     return sum(costpoints)/len(costpoints)
+
+
+def trainOnSubset(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds):
+    plotlist, testPlotlist, currentUnitaries = qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds)
+    fidelity = plotlist[1][-1]
+    testFidelity = testPlotlist[1][-1]
+    
+    return fidelity, testFidelity
+
 
 def noisyDataTraining(qnnArch, initialUnitaries, trainingData, noisyData, lda, ep, trainingRounds, numData, stepSize, alertP=0):
     noisyDataPlot = [[], []]
