@@ -135,35 +135,47 @@ def norm(state):
 
   return norm
 
-def lossFidelityInverse_sub(pred, target): # with square I called 'lossFidelityInverse2', without square just 'lossFidelityInverse'
+def lossFidelityInverse_sub(pred, target):
   return (1 - fidelityPureStates(pred, target))
 
-def lossPhysInformed_sub(pred, target):
+def lossFidelityInversePhysInformed_sub(pred, target):
+  fidelity = fidelityPureStates(pred, target)
+  return 0.9*((1 - fidelity)) + 0.1*((1 - norm(pred))**2)
+
+def lossFidelityInverseSquared_sub(pred, target):
+  return (1 - fidelityPureStates(pred, target))**2
+
+def lossFidelityInverseSquaredPhysInformed_sub(pred, target):
+  fidelity = fidelityPureStates(pred, target)
+  return 0.9*((1 - fidelity))**2 + 0.1*((1 - norm(pred))**2)
+
+def lossMSEPhysInformed_sub(pred, target):
   loss = nn.MSELoss()
   return 0.9*loss(pred, target) + 0.1*(norm(pred) - 1)**2
 
-def lossPhysInformed2_sub(pred, target):
-  fidelity = fidelityPureStates(pred, target)
-  loss = 0.9*((1 - fidelity)) + 0.1*((1 - norm(pred))**2)
-  
-  return loss
-
 def lossAverage(loss_fn, preds, targets):
-  average = 0
+  sum = 0
   for i in range(len(targets)):
-    average += loss_fn(preds[i], targets[i])
-  average = average / len(targets)
+    sum += loss_fn(preds[i], targets[i])
 
-  return average
+  return sum / len(targets)
 
 def lossFidelityInverse(preds, targets):
   return lossAverage(lossFidelityInverse_sub, preds, targets)
 
-def lossPhysInformed(preds, targets):
-  return lossAverage(lossPhysInformed_sub, preds, targets)
+def lossFidelityInversePhysInformed(preds, targets):
+  return lossAverage(lossFidelityInversePhysInformed_sub, preds, targets)
 
-def lossPhysInformed2(preds, targets):
-  return lossAverage(lossPhysInformed2_sub, preds, targets)
+def lossFidelityInverseSquared(preds, targets):
+  return lossAverage(lossFidelityInverseSquared_sub, preds, targets)
+
+def lossFidelityInverseSquaredPhysInformed(preds, targets):
+  return lossAverage(lossFidelityInverseSquaredPhysInformed_sub, preds, targets)
+
+def lossMSEPhysInformed(preds, targets):
+  return lossAverage(lossMSEPhysInformed_sub, preds, targets)
+
+
 
 """to-do
 * mixed states
