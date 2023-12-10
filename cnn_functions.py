@@ -46,7 +46,7 @@ def fidelityAverage(preds, targets):
 
 """## Generating random quantum data"""
 
-def makeQuantumData(sizeQuantumData, sizeTestingData, qnnArch): # Each element of trainingInputs is a 4x1 tensor, this is how I represent a 2x1 column vector with complex-valued entries.
+def makeQuantumData(qnnArch, sizeQuantumData, sizeTestingData): # Each element of trainingInputs is a 4x1 tensor, this is how I represent a 2x1 column vector with complex-valued entries.
   dqnn = randomNetwork(qnnArch, sizeQuantumData + sizeTestingData)
 
   quantumData = dqnn[2]
@@ -156,9 +156,12 @@ def lossMSEPhysInformed_sub(pred, target):
 def lossAverage(loss_fn, preds, targets):
   sum = 0
   for i in range(len(targets)):
-    sum += loss_fn(preds[i], targets[i])
+    print(i)
+    print(loss_fn(preds[i], targets[i]))
+    # print(preds[i], targets[i])
+    # sum += loss_fn(preds[i], targets[i])
 
-  return sum / len(targets)
+  # return sum / len(targets)
 
 def lossFidelityInverse(preds, targets):
   return lossAverage(lossFidelityInverse_sub, preds, targets)
