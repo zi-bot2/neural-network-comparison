@@ -2,14 +2,11 @@
 
 from cnn_functions import *
 
-"""## Data parameters"""
-
 sizeTrainingData = 10
 sizeTestingData = 10
 qnnArch = [1, 2, 1]
 trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeTrainingData, sizeTestingData)
 
-"""## Training parameters"""
 learningRate = 0.1
 numEpochs = 1000
 
@@ -32,11 +29,12 @@ def plotLossVsEpoch(model, loss_fn, sizeTrainingData, sizeTestingData, learningR
   plt.plot(loss_dict['Epochs'], loss_dict['Testing loss'], label = 'Testing loss')
   plt.plot(loss_dict['Epochs'], loss_dict['Training fidelity'], label = 'Training fidelity')
   plt.plot(loss_dict['Epochs'], loss_dict['Testing fidelity'], label = 'Testing fidelity')
-  # plt.title(f'4-8-4 NN\nLoss function = {loss_fn.__name__} \n# training pairs = {sizeTrainingData} \n# testing pairs = {sizeTestingData}')
-  plt.title(f'4-8-4 NN\nLoss function = MSELoss\n# training pairs = {sizeTrainingData} \n# testing pairs = {sizeTestingData}')
+  plt.title(f'4-8-4 NN\nLoss function = {loss_fn.__name__} \n# training pairs = {sizeTrainingData} \n# testing pairs = {sizeTestingData}')
+  # plt.title(f'4-8-4 NN\nLoss function = MSELoss\n# training pairs = {sizeTrainingData} \n# testing pairs = {sizeTestingData}')
   plt.legend()
   plt.xlabel('Epoch')
-  plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/MSELoss_performance.pdf', bbox_inches='tight', dpi=300)
+  plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/{loss_fn.__name__}_performance.pdf', bbox_inches='tight', dpi=300)
+  # plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/MSELoss_performance.pdf', bbox_inches='tight', dpi=300)
   plt.close()
 
 

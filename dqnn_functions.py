@@ -16,12 +16,14 @@ from time import time
 from random import sample
 import matplotlib.pyplot as plt
 
+
 def partialTraceKeep(obj, keep): # generalisation of ptrace(), partial trace via "to-keep" list
     # return partial trace:
     res = obj;
     if len(keep) != len(obj.dims[0]):
         res = obj.ptrace(keep);
     return res;
+
 
 def partialTraceRem(obj, rem): # partial trace via "to-remove" list
     # prepare keep list
@@ -35,12 +37,14 @@ def partialTraceRem(obj, rem): # partial trace via "to-remove" list
         res = obj.ptrace(keep);
     return res;
 
+
 def swappedOp(obj, i, j):
     if i==j: return obj
     numberOfQubits = len(obj.dims[0])
     permute = list(range(numberOfQubits))
     permute[i], permute[j] = permute[j], permute[i]
     return obj.permute(permute)
+
 
 def tensoredId(N):
     """not quite understanding why we need to overwrite the dims here"""
@@ -55,6 +59,7 @@ def tensoredId(N):
 
 # dims tells dimension of the respective Hilbert spaces
 
+
 def tensoredQubit0(N):
     #Make Qubit matrix
     res = qt.fock(2**N).proj() #for some reason ran faster than fock_dm(2**N) in tests
@@ -64,6 +69,7 @@ def tensoredQubit0(N):
     res.dims = dims
     #Return
     return res
+
 
 def unitariesCopy(unitaries): # deep copyof a list of unitaries
     newUnitaries = []
@@ -75,6 +81,7 @@ def unitariesCopy(unitaries): # deep copyof a list of unitaries
     return newUnitaries
 
 """should be numpy.random not scipy.random"""
+
 
 def randomQubitUnitary(numQubits): # alternatively, use functions rand_unitary and rand_unitary_haar
     dim = 2**numQubits
@@ -88,6 +95,7 @@ def randomQubitUnitary(numQubits): # alternatively, use functions rand_unitary a
     res.dims = dims
     #Return
     return res
+
 
 def randomQubitState(numQubits): # alternatively, use functions rand_ket and rand_ket_haar
     dim = 2**numQubits
@@ -103,6 +111,7 @@ def randomQubitState(numQubits): # alternatively, use functions rand_ket and ran
     #Return
     return res
 
+
 def randomTrainingData(unitary, N): # generating training data based on a unitary
     numQubits = len(unitary.dims[0])
     trainingData=[]
@@ -113,6 +122,7 @@ def randomTrainingData(unitary, N): # generating training data based on a unitar
         trainingData.append([t,ut])
     #Return
     return trainingData
+
 
 def randomNetwork(qnnArch, numTrainingPairs):
     assert qnnArch[0]==qnnArch[-1], "Not a valid QNN-Architecture."
@@ -138,12 +148,14 @@ def randomNetwork(qnnArch, numTrainingPairs):
     #Return
     return (qnnArch, networkUnitaries, networkTrainingData, networkUnitary)
 
+
 def costFunction(inputData, outputStates):
     costSum = 0
     for i in range(len(inputData)):
         costSum += inputData[i][1].dag() * outputStates[i] * inputData[i][1]
 
     return costSum.tr()/len(inputData)
+
 
 def makeLayerChannel(qnnArch, unitaries, l, inputState):
     numInputQubits = qnnArch[l-1]
@@ -159,6 +171,7 @@ def makeLayerChannel(qnnArch, unitaries, l, inputState):
 
     #Multiply and tensor out input state
     return partialTraceRem(layerUni * state * layerUni.dag(), list(range(numInputQubits)))
+
 
 def makeAdjointLayerChannel(qnnArch, unitaries, l, outputState):
     numInputQubits = qnnArch[l-1]
@@ -178,6 +191,7 @@ def makeAdjointLayerChannel(qnnArch, unitaries, l, outputState):
 
     return partialTraceKeep(state1 * layerUni.dag() * state2 * layerUni, list(range(numInputQubits)) )
 
+
 def feedforward(qnnArch, unitaries, trainingData):
     storedStates = []
     for x in range(len(trainingData)):
@@ -188,6 +202,7 @@ def feedforward(qnnArch, unitaries, trainingData):
             layerwiseList.append(currentState)
         storedStates.append(layerwiseList)
     return storedStates
+
 
 def makeUpdateMatrix(qnnArch, unitaries, trainingData, storedStates, lda, ep, l, j):
     numInputQubits = qnnArch[l-1]
@@ -212,6 +227,7 @@ def makeUpdateMatrix(qnnArch, unitaries, trainingData, storedStates, lda, ep, l,
     summ = (-ep * (2**numInputQubits)/(lda*len(trainingData))) * summ
     return summ.expm()
 
+
 def updateMatrixFirstPart(qnnArch, unitaries, storedStates, l, j, x):
     numInputQubits = qnnArch[l-1]
     numOutputQubits = qnnArch[l]
@@ -226,6 +242,7 @@ def updateMatrixFirstPart(qnnArch, unitaries, storedStates, l, j, x):
 
     #Multiply
     return productUni * state * productUni.dag()
+
 
 def updateMatrixSecondPart(qnnArch, unitaries, trainingData, l, j, x):
     numInputQubits = qnnArch[l-1]
@@ -246,6 +263,7 @@ def updateMatrixSecondPart(qnnArch, unitaries, trainingData, l, j, x):
     #Multiply
     return productUni.dag() * state * productUni
 
+
 def makeUpdateMatrixTensored(qnnArch, unitaries, lda, ep, trainingData, storedStates, l, j):
     numInputQubits = qnnArch[l-1]
     numOutputQubits = qnnArch[l]
@@ -254,6 +272,7 @@ def makeUpdateMatrixTensored(qnnArch, unitaries, lda, ep, trainingData, storedSt
     if numOutputQubits-1 != 0:
         res = qt.tensor(res, tensoredId(numOutputQubits-1))
     return swappedOp(res, numInputQubits, numInputQubits + j)
+
 
 def qnnTraining(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds, alert=0):
 
@@ -308,6 +327,7 @@ def qnnTraining(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds
     #Return
     return [plotlist, currentUnitaries]
 
+
 def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds):
 
     # Split data into training and testing
@@ -336,7 +356,7 @@ def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTes
 
     #Training of the Quantum Neural Network
     for k in range(trainingRounds):
-        print("In training round "+str(k))
+        # print("In training round "+str(k))
 
         ### UPDATING
         newUnitaries = unitariesCopy(currentUnitaries)
@@ -376,8 +396,10 @@ def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTes
     #Return
     return [plotlist, testPlotlist, currentUnitaries]
 
+
 def boundRand(D, N, n):
     return (n/N) + (N-n)/(N*D*(D+1)) * (D + min(n**2+1, D**2))
+
 
 def subsetTrainingAvg(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds, iterations, n, alertIt=0):
     costpoints = []
@@ -400,12 +422,14 @@ def subsetTrainingAvg(qnnArch, initialUnitaries, trainingData, lda, ep, training
 
     return sum(costpoints)/len(costpoints)
 
+
 def trainOnSubset(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds):
     plotlist, testPlotlist, currentUnitaries = qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds)
     fidelity = plotlist[1][-1]
     testFidelity = testPlotlist[1][-1]
     
     return fidelity, testFidelity
+
 
 def noisyDataTraining(qnnArch, initialUnitaries, trainingData, noisyData, lda, ep, trainingRounds, numData, stepSize, alertP=0):
     noisyDataPlot = [[], []]
