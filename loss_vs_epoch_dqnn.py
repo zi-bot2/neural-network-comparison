@@ -1,10 +1,10 @@
-"""Loss vs epoch for DQNN"""
+"""# Loss vs epoch for DQNN"""
 
 from dqnn_functions import *
 import seaborn as sns
 sns.set()
 
-numTrainingPairs = 5
+numTrainingPairs = 10
 numTestingPairs = 10
 qnnArch = [1, 2, 1]
 lambda_ = 1
@@ -21,32 +21,5 @@ plt.plot(testPlotlist121[0], testPlotlist121[1], label='Testing')
 plt.legend()
 plt.xlabel('s')
 plt.ylabel('Fidelity[s]')
-plt.show()
-plt.savefig(f'/home/zchua/thesis_code/plots/dqnn_fidelity_performance.pdf', bbox_inches='tight', dpi=300)
+plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/dqnn_fidelity_performance.pdf', bbox_inches='tight', dpi=300)
 plt.close()
-
-
-# Training only
-
-# numQubits = 1
-# numTrainingPairs = 10
-# numTestingPairs = 10
-# qnnArch = [numQubits, 2, numQubits]
-# lambda_ = 1
-# epsilon = 0.1
-# numEpochs = 500
-
-# network = randomNetwork(qnnArch, numTrainingPairs + numTestingPairs)
-
-# plotlist121 = qnnTraining(network[0], network[1], network[2],
-#                           lambda_, epsilon, numEpochs)[0]
-
-# for i in range(len(plotlist121[1])):
-#   if plotlist121[1][i] >= 0.95:
-#     print('Exceeds cost of 0.95 at training step ' + str(i))
-#     break
-
-# plt.plot(plotlist121[0], plotlist121[1])
-# plt.xlabel('s')
-# plt.ylabel('Cost[s]')
-# plt.show()

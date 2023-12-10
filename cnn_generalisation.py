@@ -19,7 +19,7 @@ numQubits = 1
 qnnArch = [numQubits, 2, numQubits]
 
 # Training parameters
-learningRate = 0.05
+learningRate = 0.1
 numEpochs = 1000
 sizeTestData = 10
 # loss_fn = nn.MSELoss()

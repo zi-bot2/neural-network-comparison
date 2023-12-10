@@ -109,7 +109,7 @@ def trainTestLoop(model, loss_fn, optimizer, trainingInputs, testingInputs, trai
   return loss, testLoss, fidelity, testFidelity
 
 def trainModel(model, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTestData, qnnArch):
-  trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(sizeQuantumData, sizeTestData, qnnArch)
+  trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeQuantumData, sizeTestData)
 
   optimizer = torch.optim.SGD(model.parameters(), lr = learningRate)
 
@@ -156,12 +156,9 @@ def lossMSEPhysInformed_sub(pred, target):
 def lossAverage(loss_fn, preds, targets):
   sum = 0
   for i in range(len(targets)):
-    print(i)
-    print(loss_fn(preds[i], targets[i]))
-    # print(preds[i], targets[i])
-    # sum += loss_fn(preds[i], targets[i])
+    sum += loss_fn(preds[i], targets[i])
 
-  # return sum / len(targets)
+  return sum / len(targets)
 
 def lossFidelityInverse(preds, targets):
   return lossAverage(lossFidelityInverse_sub, preds, targets)
