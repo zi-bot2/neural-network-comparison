@@ -4,6 +4,28 @@ from dqnn_functions import *
 import seaborn as sns
 sns.set()
 
+numTrainingPairs = 5
+numTestingPairs = 10
+qnnArch = [1, 2, 1]
+lambda_ = 1
+epsilon = 0.1
+numEpochs = 1000
+
+network = randomNetwork(qnnArch, numTrainingPairs + numTestingPairs)
+
+plotlist121, testPlotlist121, currentUnitaries = qnnTrainingTesting(network[0], network[1], network[2], numTrainingPairs, numTestingPairs, lambda_, epsilon, numEpochs)
+
+plt.title(f'1-2-1 DQNN\n# training pairs = {numTrainingPairs}\n# testing pairs = {numTestingPairs}')
+plt.plot(plotlist121[0], plotlist121[1], label='Training')
+plt.plot(testPlotlist121[0], testPlotlist121[1], label='Testing')
+plt.legend()
+plt.xlabel('s')
+plt.ylabel('Fidelity[s]')
+# plt.show()
+plt.savefig(f'/home/zchua/thesis_code/plots/dqnn_fidelity_performance.pdf', bbox_inches='tight', dpi=300)
+plt.close()
+
+
 # Training only
 
 # numQubits = 1
@@ -28,28 +50,3 @@ sns.set()
 # plt.xlabel('s')
 # plt.ylabel('Cost[s]')
 # plt.show()
-
-
-# Training and testing
-
-numQubits = 1
-numTrainingPairs = 10
-numTestingPairs = 10
-qnnArch = [numQubits, 2, numQubits]
-lambda_ = 1
-epsilon = 0.1
-numEpochs = 1000
-
-network = randomNetwork(qnnArch, numTrainingPairs + numTestingPairs)
-
-plotlist121, testPlotlist121 = qnnTrainingTesting(network[0], network[1], network[2], numTrainingPairs, numTestingPairs, lambda_, epsilon, numEpochs)[0], qnnTrainingTesting(network[0], network[1], network[2], numTrainingPairs, numTestingPairs, lambda_, epsilon, numEpochs)[1]
-
-plt.title(f'Fidelity during DQNN training \nsizeTrainingData = {numTrainingPairs} \n sizeTestingData = {numTestingPairs}')
-plt.plot(plotlist121[0], plotlist121[1], label='Training')
-plt.plot(testPlotlist121[0], testPlotlist121[1], label='Testing')
-plt.legend()
-plt.xlabel('s')
-plt.ylabel('Fidelity[s]')
-# plt.show()
-plt.savefig(f'/home/zchua/thesis_code/plots/dqnn_fidelity_performance.pdf', bbox_inches='tight', dpi=300)
-plt.close()

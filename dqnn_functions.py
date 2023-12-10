@@ -212,7 +212,6 @@ def makeUpdateMatrix(qnnArch, unitaries, trainingData, storedStates, lda, ep, l,
     summ = (-ep * (2**numInputQubits)/(lda*len(trainingData))) * summ
     return summ.expm()
 
-
 def updateMatrixFirstPart(qnnArch, unitaries, storedStates, l, j, x):
     numInputQubits = qnnArch[l-1]
     numOutputQubits = qnnArch[l]
@@ -227,7 +226,6 @@ def updateMatrixFirstPart(qnnArch, unitaries, storedStates, l, j, x):
 
     #Multiply
     return productUni * state * productUni.dag()
-
 
 def updateMatrixSecondPart(qnnArch, unitaries, trainingData, l, j, x):
     numInputQubits = qnnArch[l-1]
@@ -247,7 +245,6 @@ def updateMatrixSecondPart(qnnArch, unitaries, trainingData, l, j, x):
 
     #Multiply
     return productUni.dag() * state * productUni
-
 
 def makeUpdateMatrixTensored(qnnArch, unitaries, lda, ep, trainingData, storedStates, l, j):
     numInputQubits = qnnArch[l-1]
@@ -311,7 +308,6 @@ def qnnTraining(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds
     #Return
     return [plotlist, currentUnitaries]
 
-
 def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds):
 
     # Split data into training and testing
@@ -325,7 +321,7 @@ def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTes
     storedStates = feedforward(qnnArch, currentUnitaries, trainingData)
     testStoredStates = feedforward(qnnArch, currentUnitaries, testingData)
 
-    #Cost calculation for given unitaries
+    # Cost calculation for given unitaries
     outputStates = []
     testOutputStates = []
     
@@ -367,22 +363,21 @@ def qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTes
         
         for m in range(len(storedStates)):
             outputStates.append(storedStates[m][-1])
+
+        for m in range(len(testStoredStates)):
             testOutputStates.append(testStoredStates[m][-1])
         
         plotlist[0].append(s)
         plotlist[1].append(costFunction(trainingData, outputStates))
 
         testPlotlist[0].append(s)
-        print(len(testOutputStates))
-        # testPlotlist[1].append(costFunction(testingData, testOutputStates))
+        testPlotlist[1].append(costFunction(testingData, testOutputStates))
 
     #Return
     return [plotlist, testPlotlist, currentUnitaries]
 
-
 def boundRand(D, N, n):
     return (n/N) + (N-n)/(N*D*(D+1)) * (D + min(n**2+1, D**2))
-
 
 def subsetTrainingAvg(qnnArch, initialUnitaries, trainingData, lda, ep, trainingRounds, iterations, n, alertIt=0):
     costpoints = []
@@ -405,14 +400,12 @@ def subsetTrainingAvg(qnnArch, initialUnitaries, trainingData, lda, ep, training
 
     return sum(costpoints)/len(costpoints)
 
-
 def trainOnSubset(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds):
     plotlist, testPlotlist, currentUnitaries = qnnTrainingTesting(qnnArch, initialUnitaries, data, numTrainingPairs, numTestingPairs, lda, ep, trainingRounds)
     fidelity = plotlist[1][-1]
     testFidelity = testPlotlist[1][-1]
     
     return fidelity, testFidelity
-
 
 def noisyDataTraining(qnnArch, initialUnitaries, trainingData, noisyData, lda, ep, trainingRounds, numData, stepSize, alertP=0):
     noisyDataPlot = [[], []]
