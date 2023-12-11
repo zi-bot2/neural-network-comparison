@@ -56,22 +56,22 @@ test_df.to_csv(f'/home/zchua/thesis_code/csvs/dqnn_test_df.csv')
 
 # plotlist[1]
 
-training_x = list(train_df)[1:]
-training_y = [train_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in training_x]
-training_stds = [train_df[f'{sizeQuantumData}'].std() for sizeQuantumData in training_x]
+# training_x = list(train_df)[1:]
+# training_y = [train_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in training_x]
+# training_stds = [train_df[f'{sizeQuantumData}'].std() for sizeQuantumData in training_x]
 
-testing_x = list(test_df)[1:]
-testing_y = [test_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in training_x]
-testing_stds = [test_df[f'{sizeQuantumData}'].std() for sizeQuantumData in training_x]
+# testing_x = list(test_df)[1:]
+# testing_y = [test_df[f'{sizeQuantumData}'].mean() for sizeQuantumData in training_x]
+# testing_stds = [test_df[f'{sizeQuantumData}'].std() for sizeQuantumData in training_x]
 
-plt.scatter(testing_x, testing_y, label='test')
-plt.errorbar(testing_x, testing_y, yerr=testing_stds, fmt = 'o')
-plt.scatter(training_x, training_y, label='train')
-plt.errorbar(training_x, training_y, yerr=training_stds, fmt = 'o')
-plt.xlabel('sizeQuantumData')
-plt.ylabel('Fidelity')
-plt.title(f'Fidelity for 4-8-4 CNN (1-2-1 DQNN) after {numEpochs} epochs\nLoss = {loss_fn}')
-plt.legend()
+# plt.scatter(testing_x, testing_y, label='test')
+# plt.errorbar(testing_x, testing_y, yerr=testing_stds, fmt = 'o')
+# plt.scatter(training_x, training_y, label='train')
+# plt.errorbar(training_x, training_y, yerr=training_stds, fmt = 'o')
+# plt.xlabel('sizeQuantumData')
+# plt.ylabel('Fidelity')
+# plt.title(f'Fidelity for 4-8-4 CNN (1-2-1 DQNN) after {numEpochs} epochs\nLoss = {loss_fn}')
+# plt.legend()
 
 
 """## Kerstin's version"""
