@@ -6,7 +6,7 @@ import pandas as pd
 """## My version"""
 
 # Data specifications
-rangeSizeTrainingData = list(range(2, 21))
+rangeSizeTrainingData = list(range(1, 21))
 qnnArch = [1, 2, 1]
 
 # Training parameters
@@ -44,8 +44,8 @@ test_df = pd.DataFrame(test_dict)
 # train_df.head()
 
 import os  
-train_df.to_csv(f'/home/zchua/thesis_code/csvs/dqnn_train_df.csv')
-test_df.to_csv(f'/home/zchua/thesis_code/csvs/dqnn_test_df.csv')
+train_df.to_csv(f'/home/zchua/thesis_code/csvs/dqnn_train_df_12_2023.csv')
+test_df.to_csv(f'/home/zchua/thesis_code/csvs/dqnn_test_df_12_2023.csv')
 
 """## Kerstin's version"""
 

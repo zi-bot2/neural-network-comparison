@@ -4,7 +4,7 @@ from dqnn_functions import *
 import seaborn as sns
 sns.set()
 
-numTrainingPairs = 10
+numTrainingPairs = 1
 numTestingPairs = 10
 qnnArch = [1, 2, 1]
 lambda_ = 1
