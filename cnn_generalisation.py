@@ -22,10 +22,10 @@ qnnArch = [numQubits, 2, numQubits]
 learningRate = 0.1
 numEpochs = 1000
 sizeTestData = 10
-loss_fn = nn.MSELoss()
+# loss_fn = nn.MSELoss()
 loss_fns = [lossFidelityInverseSquared, lossFidelityInverseSquaredPhysInformed, 
             lossMSEPhysInformed]
-# loss_fn = loss_fns[0]
+loss_fn = loss_fns[0]
 print(f'Loss function: {loss_fn}')
 
 # Making DataFrame to store values
@@ -56,7 +56,7 @@ train_df = pd.DataFrame(train_dict)
 test_df = pd.DataFrame(test_dict)
 
 import os  
-train_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_train_df_12_2023.csv')
-test_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_test_df_12_2023.csv')
-# train_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_train_df_12_2023.csv')
-# test_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_test_df_12_2023.csv')
+# train_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_train_df_12_2023.csv')
+# test_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_test_df_12_2023.csv')
+train_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_train_df_12_2023.csv')
+test_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_test_df_12_2023.csv')
