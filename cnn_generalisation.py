@@ -23,9 +23,10 @@ learningRate = 0.1
 numEpochs = 1000
 sizeTestData = 10
 # loss_fn = nn.MSELoss()
-loss_fns = [lossFidelityInverseSquared, lossFidelityInverseSquaredPhysInformed, 
+loss_fns = [lossFidelityInverseSquared, 
+            lossFidelityInverseSquaredPhysInformed, 
             lossMSEPhysInformed]
-loss_fn = loss_fns[0]
+loss_fn = loss_fns[1]
 print(f'Loss function: {loss_fn}')
 
 # Making DataFrame to store values
