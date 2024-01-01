@@ -6,23 +6,25 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
 
-trainFile = '/home/zchua/thesis_code/csvs/dqnn_train_df_12_2023.csv'
-testFile = '/home/zchua/thesis_code/csvs/dqnn_test_df_12_2023.csv'
-# trainFile = '/home/zchua/thesis_code/csvs/lossFidelityInverse2_train_df.csv'
-# testFile = '/home/zchua/thesis_code/csvs/lossFidelityInverse2_test_df.csv'
-# trainFile = '/home/zchua/thesis_code/csvs/lossPhysInformed2_train_df.csv'
-# testFile = '/home/zchua/thesis_code/csvs/lossPhysInformed2_test_df.csv'
-# trainFile = '/home/zchua/thesis_code/csvs/lossPhysInformed_train_df.csv'
-# testFile = '/home/zchua/thesis_code/csvs/lossPhysInformed_test_df.csv'
-# trainFile = '/home/zchua/thesis_code/lossFidelityInverse_train_df.csv'
-# testFile = '/home/zchua/thesis_code/lossFidelityInverse_test_df.csv'
-# trainFile = '/home/zchua/thesis_code/csvs/MSELoss()_train_df.csv'
-# testFile = '/home/zchua/thesis_code/csvs/MSELoss()_test_df.csv'
+# trainFile = '/home/zchua/thesis_code/csvs/dqnn_train_df_12_2023.csv'
+# testFile = '/home/zchua/thesis_code/csvs/dqnn_test_df_12_2023.csv'
+
+# trainFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquared_train_df_12_2023.csv'
+# testFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquared_test_df_12_2023.csv'
+
+trainFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquaredPhysInformed_train_df_12_2023.csv'
+testFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquaredPhysInformed_test_df_12_2023.csv'
+
+# trainFile = '/home/zchua/thesis_code/csvs/MSELoss_train_df_12_2023.csv'
+# testFile = '/home/zchua/thesis_code/csvs/MSELoss_test_df_12_2023.csv'
+
+# trainFile = '/home/zchua/thesis_code/csvs/lossMSEPhysInformed_train_df_12_2023.csv'
+# testFile = '/home/zchua/thesis_code/csvs/lossMSEPhysInformed_test_df_12_2023.csv'
 
 train_df = pd.read_csv(trainFile)
 test_df = pd.read_csv(testFile)
 
-# loss_fn = trainFile[len('/home/zchua/thesis_code/') : trainFile.find('_train_df.csv')]
+loss_fn = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find('_train_df')]
 numEpochs = 1000
 # loss_fn = 'MSELoss'
 
@@ -42,8 +44,8 @@ plt.ylim([0, 1.1])
 plt.xlabel('# training pairs')
 plt.ylabel('Fidelity')
 plt.legend()
-plt.title(f'1-2-1 DQNN\nFidelity after {numEpochs} training epochs')
-plt.savefig(f'/home/zchua/thesis_code/plots/121_dqnn_generalisation.pdf', bbox_inches='tight', dpi=300)
-# plt.title(f'Fidelity for 4-8-4 CNN after {numEpochs} epochs\nLoss = {loss_fn}')
-# plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)
+# plt.title(f'1-2-1 DQNN\nFidelity after {numEpochs} training epochs')
+# plt.savefig(f'/home/zchua/thesis_code/plots/121_dqnn_generalisation.pdf', bbox_inches='tight', dpi=300)
+plt.title(f'Fidelity for 4-8-4 CNN after {numEpochs} epochs\nLoss = {loss_fn}')
+plt.savefig(f'/home/zchua/thesis_code/plots/121_{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)
 plt.close()
