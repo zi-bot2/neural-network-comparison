@@ -26,7 +26,7 @@ sizeTestData = 10
 loss_fns = [lossFidelityInverseSquared, 
             lossFidelityInverseSquaredPhysInformed, 
             lossMSEPhysInformed]
-loss_fn = loss_fns[1]
+loss_fn = loss_fns[2]
 print(f'Loss function: {loss_fn}')
 
 # Making DataFrame to store values
