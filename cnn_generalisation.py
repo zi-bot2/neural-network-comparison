@@ -22,11 +22,11 @@ qnnArch = [numQubits, 2, numQubits]
 learningRate = 0.1
 numEpochs = 1000
 sizeTestData = 10
-# loss_fn = nn.MSELoss()
+loss_fn = nn.MSELoss()
 loss_fns = [lossFidelityInverseSquared, 
             lossFidelityInverseSquaredPhysInformed, 
             lossMSEPhysInformed]
-loss_fn = loss_fns[2]
+# loss_fn = loss_fns[2]
 print(f'Loss function: {loss_fn}')
 
 # Making DataFrame to store values
@@ -43,8 +43,8 @@ for sizeQuantumData in rangeSizeQuantumData:
   testFidelities = []
 
   for i in range(numTrials):
-    cnn121 = NeuralNetwork121()
-    cnn121 = NeuralNetwork121().to(device)
+    # cnn121 = NeuralNetwork121().to(device)
+    cnn121 = NeuralNetwork121Linear().to(device)
     fidelity, testFidelity = trainModel(cnn121, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTestData, qnnArch)
     fidelities.append(fidelity.cpu().detach().numpy())
     testFidelities.append(testFidelity.cpu().detach().numpy())
@@ -56,8 +56,8 @@ for sizeQuantumData in rangeSizeQuantumData:
 train_df = pd.DataFrame(train_dict)
 test_df = pd.DataFrame(test_dict)
 
-import os  
-# train_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_train_df_12_2023.csv')
-# test_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_test_df_12_2023.csv')
-train_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_train_df_12_2023.csv')
-test_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_test_df_12_2023.csv')
+# import os  
+train_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_train_df_12_2023.csv')
+test_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_test_df_12_2023.csv')
+# train_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_train_df_12_2023.csv')
+# test_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_test_df_12_2023.csv')

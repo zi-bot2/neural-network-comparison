@@ -85,6 +85,17 @@ class NeuralNetwork121(nn.Module):
 
   def forward(self, x):
     return self.layer_2(self.relu(self.layer_1(x)))
+  
+"""## Defining the 1-2-1 classical neural network class"""
+
+class NeuralNetwork121Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**1), 2*(2**2))
+    self.layer_2 = nn.Linear(2*(2**2), 2*(2**1))
+
+  def forward(self, x):
+    return self.layer_2((self.layer_1(x)))
 
 """## Training and testing"""
 
