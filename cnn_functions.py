@@ -4,6 +4,7 @@ import torch
 from torch import nn
 import pandas as pd
 import seaborn as sns
+import os
 
 sns.set()
 
@@ -74,7 +75,7 @@ def makeQuantumData(qnnArch, sizeQuantumData, sizeTestingData): # Each element o
 
 #   return inputsTrain, inputsTest, outputsTrain, outputsTest
 
-"""## Defining the 1-2-1 classical neural network class"""
+"""## Defining the classical neural network classes"""
 
 class NeuralNetwork121(nn.Module):
   def __init__(self):
@@ -86,7 +87,39 @@ class NeuralNetwork121(nn.Module):
   def forward(self, x):
     return self.layer_2(self.relu(self.layer_1(x)))
   
-"""## Defining the 1-2-1 classical neural network class"""
+class NeuralNetwork232(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**2), 2*(2**3)) # 2^{numQubits} is the complex vector, then represent real and imaginary parts separately as a 2^{numQubits} x 2 matrix, then flatten that into a (2^{numQubits} * 2) x 1 vector
+    self.layer_2 = nn.Linear(2*(2**3), 2*(2**2))
+    self.relu = nn.ReLU()
+
+  def forward(self, x):
+    return self.layer_2(self.relu(self.layer_1(x)))
+  
+class NeuralNetwork343(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**3), 2*(2**4))
+    self.layer_2 = nn.Linear(2*(2**4), 2*(2**3))
+    self.relu = nn.ReLU()
+
+  def forward(self, x):
+    return self.layer_2(self.relu(self.layer_1(x)))
+  
+class NeuralNetwork23432(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**2), 2*(2**3))
+    self.layer_2 = nn.Linear(2*(2**3), 2*(2**4))
+    self.layer_3 = nn.Linear(2*(2**4), 2*(2**3))
+    self.layer_4 = nn.Linear(2*(2**3), 2*(2**2))
+    self.relu = nn.ReLU()
+
+  def forward(self, x):
+    return self.layer_4(self.relu(self.layer_3(self.relu(self.layer_2(self.relu(self.layer_1(x)))))))
+
+"""## Linear 121"""
 
 class NeuralNetwork121Linear(nn.Module):
   def __init__(self):
@@ -187,6 +220,44 @@ def lossMSEPhysInformed(preds, targets):
   return lossAverage(lossMSEPhysInformed_sub, preds, targets)
 
 
+"""Generalisation functions"""
+
+def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
+  if f'{loss_fn}' == 'MSELoss()':
+    loss_fn_name = 'MSELoss'
+  else:
+    loss_fn_name = loss_fn.__name__
+  
+  print(f'Loss function: {loss_fn_name}')
+
+  train_dict = {}
+  test_dict = {}
+
+  for sizeQuantumData in rangeSizeQuantumData:
+    train_dict[f'{sizeQuantumData}'] = []
+    test_dict[f'{sizeQuantumData}'] = []
+
+  for sizeQuantumData in rangeSizeQuantumData:
+    fidelities = []
+    testFidelities = []
+
+    for i in range(numTrials):
+      cnn = model().to(device)
+      fidelity, testFidelity = trainModel(cnn, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTestData, qnnArch)
+      fidelities.append(fidelity.cpu().detach().numpy())
+      testFidelities.append(testFidelity.cpu().detach().numpy())
+      print(f'Trial ({sizeQuantumData}, {i}) done.')
+
+    train_dict[f'{sizeQuantumData}'] = fidelities
+    test_dict[f'{sizeQuantumData}'] = testFidelities
+
+  train_df = pd.DataFrame(train_dict)
+  test_df = pd.DataFrame(test_dict)
+
+  train_df.to_csv(f'{directory}/{loss_fn_name}_train_df.csv')
+  test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
+
+  return train_df, test_df
 
 """to-do
 * mixed states

@@ -29,7 +29,7 @@ for sizeQuantumData in rangeSizeTrainingData:
   testFidelities = []
 
   for i in range(numTrials):
-    dqnn = randomNetwork([1,2,1], sizeQuantumData + sizeTestData)
+    dqnn = randomNetwork(qnnArch, sizeQuantumData + sizeTestData)
     fidelity, testFidelity = trainOnSubset(dqnn[0], dqnn[1], dqnn[2], sizeQuantumData, sizeTestData, lambda_, epsilon, numEpochs)
     fidelities.append(fidelity)
     testFidelities.append(testFidelity)

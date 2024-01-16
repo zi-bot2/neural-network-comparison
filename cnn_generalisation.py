@@ -1,7 +1,6 @@
 """# CNN Generalisation"""
 
 from cnn_functions import *
-import os
 
 """We want to plot mean/media value of the fidelity vs sizeQuantumData
 
@@ -19,6 +18,7 @@ rangeSizeQuantumData = list(range(1, 21))
 numQubits = 1
 qnnArch = [numQubits, 2, numQubits]
 
+
 # Training parameters
 learningRate = 0.1
 numEpochs = 1000
@@ -29,49 +29,17 @@ loss_fns = [lossFidelityInverseSquared,
             nn.MSELoss(),
             lossMSEPhysInformed]
 
+
+# CNN model we're using
 model = NeuralNetwork121Linear
-loss_fn = loss_fns[2]
+model_name = '121LinearCNN'
 
-def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch):
-  if f'{loss_fn}' == 'MSELoss()':
-    loss_fn_name = MSELoss
-  else:
-    loss_fn_name = loss_fn.__name__
-  
-  print(f'Loss function: {loss_fn}')
 
-  train_dict = {}
-  test_dict = {}
-
-  for sizeQuantumData in rangeSizeQuantumData:
-    train_dict[f'{sizeQuantumData}'] = []
-    test_dict[f'{sizeQuantumData}'] = []
-
-  for sizeQuantumData in rangeSizeQuantumData:
-    fidelities = []
-    testFidelities = []
-
-    for i in range(numTrials):
-      cnn = model().to(device)
-      fidelity, testFidelity = trainModel(cnn, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTestData, qnnArch)
-      fidelities.append(fidelity.cpu().detach().numpy())
-      testFidelities.append(testFidelity.cpu().detach().numpy())
-      print(f'Trial ({sizeQuantumData}, {i}) done.')
-
-    train_dict[f'{sizeQuantumData}'] = fidelities
-    test_dict[f'{sizeQuantumData}'] = testFidelities
-
-  train_df = pd.DataFrame(train_dict)
-  test_df = pd.DataFrame(test_dict)
-
-  train_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn_name}_train_df.csv')
-  test_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn_name}_test_df.csv')
-
-  return train_df, test_df
-
-make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch)
-
-print(f'{loss_fn}' == 'MSELoss()')
+# Make the CSVs and save to specified directory
+directory = f'/home/zchua/thesis_code/csvs/{model_name}'
+# os.mkdir(directory)
+for loss_fn in loss_fns:
+  make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory)
 
 # Making DataFrame to store values
 # train_dict = {}
