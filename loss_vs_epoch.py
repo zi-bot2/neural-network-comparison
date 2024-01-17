@@ -33,7 +33,7 @@ def plotLossVsEpoch(model, loss_fn, sizeTrainingData, sizeTestingData, learningR
   plt.legend()
   plt.xlabel('Epoch')
   plt.show()
-  plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/{loss_fn.__name__}_performance.pdf', bbox_inches='tight', dpi=300)
+  # plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/{loss_fn.__name__}_performance.pdf', bbox_inches='tight', dpi=300)
   # # plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/MSELoss_performance.pdf', bbox_inches='tight', dpi=300)
   plt.close()
 

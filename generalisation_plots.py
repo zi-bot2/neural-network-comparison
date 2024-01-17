@@ -4,22 +4,12 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 sns.set()
+# os.mkdir()
 
-# trainFile = '/home/zchua/thesis_code/csvs/dqnn_train_df_12_2023.csv'
-# testFile = '/home/zchua/thesis_code/csvs/dqnn_test_df_12_2023.csv'
-
-# trainFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquared_train_df_12_2023.csv'
-# testFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquared_test_df_12_2023.csv'
-
-trainFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquaredPhysInformed_train_df_12_2023.csv'
-testFile = '/home/zchua/thesis_code/csvs/lossFidelityInverseSquaredPhysInformed_test_df_12_2023.csv'
-
-# trainFile = '/home/zchua/thesis_code/csvs/MSELoss_train_df_12_2023.csv'
-# testFile = '/home/zchua/thesis_code/csvs/MSELoss_test_df_12_2023.csv'
-
-# trainFile = '/home/zchua/thesis_code/csvs/lossMSEPhysInformed_train_df_12_2023.csv'
-# testFile = '/home/zchua/thesis_code/csvs/lossMSEPhysInformed_test_df_12_2023.csv'
+trainFile = '/home/zchua/thesis_code/csvs/121LinearCNN/lossMSEPhysInformed_train_df.csv'
+testFile = '/home/zchua/thesis_code/csvs/121LinearCNN/lossMSEPhysInformed_test_df.csv'
 
 train_df = pd.read_csv(trainFile)
 test_df = pd.read_csv(testFile)
@@ -47,5 +37,6 @@ plt.legend()
 # plt.title(f'1-2-1 DQNN\nFidelity after {numEpochs} training epochs')
 # plt.savefig(f'/home/zchua/thesis_code/plots/121_dqnn_generalisation.pdf', bbox_inches='tight', dpi=300)
 plt.title(f'Fidelity for 4-8-4 CNN after {numEpochs} epochs\nLoss = {loss_fn}')
-plt.savefig(f'/home/zchua/thesis_code/plots/121_{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)
-plt.close()
+
+# plt.savefig(f'/home/zchua/thesis_code/plots/121_{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)
+# plt.close()
