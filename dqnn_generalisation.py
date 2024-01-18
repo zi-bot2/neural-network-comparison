@@ -2,12 +2,13 @@
 
 from dqnn_functions import *
 import pandas as pd
+import os
 
 """## My version"""
 
 # Data specifications
 rangeSizeTrainingData = list(range(1, 21))
-qnnArch = [1, 2, 1]
+qnnArch = [2, 3, 4, 3, 2]
 
 # Training parameters
 lambda_ = 1
@@ -15,37 +16,16 @@ epsilon = 0.1
 numEpochs = 1000
 sizeTestData = 10
 
-# Making DataFrame to store values
-train_dict = {}
-test_dict = {}
+# Generalisation specs
 numTrials = 30
 
-for sizeQuantumData in rangeSizeTrainingData:
-  train_dict[f'{sizeQuantumData}'] = []
-  test_dict[f'{sizeQuantumData}'] = []
+directory = '/home/zchua/thesis_code/csvs/23432'
+os.mkdir(directory)
 
-for sizeQuantumData in rangeSizeTrainingData:
-  fidelities = []
-  testFidelities = []
+make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData, 
+                                  lambda_, epsilon, numEpochs, 
+                                  sizeTestData, numTrials, directory)
 
-  for i in range(numTrials):
-    dqnn = randomNetwork(qnnArch, sizeQuantumData + sizeTestData)
-    fidelity, testFidelity = trainOnSubset(dqnn[0], dqnn[1], dqnn[2], sizeQuantumData, sizeTestData, lambda_, epsilon, numEpochs)
-    fidelities.append(fidelity)
-    testFidelities.append(testFidelity)
-    print(f'Trial ({sizeQuantumData}, {i}) done.')
-
-  train_dict[f'{sizeQuantumData}'] = fidelities
-  test_dict[f'{sizeQuantumData}'] = testFidelities
-
-train_df = pd.DataFrame(train_dict) 
-test_df = pd.DataFrame(test_dict)
-
-# train_df.head()
-
-import os  
-train_df.to_csv(f'/home/zchua/thesis_code/csvs/dqnn_train_df_12_2023.csv')
-test_df.to_csv(f'/home/zchua/thesis_code/csvs/dqnn_test_df_12_2023.csv')
 
 """## Kerstin's version"""
 

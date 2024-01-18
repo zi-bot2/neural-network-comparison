@@ -11,6 +11,7 @@ Original file is located at
 import numpy as np
 import scipy as sc
 import qutip as qt
+import pandas as pd
 # further packages
 from time import time
 from random import sample
@@ -459,3 +460,37 @@ def noisyDataTraining(qnnArch, initialUnitaries, trainingData, noisyData, lda, e
         i += stepSize
 
     return noisyDataPlot
+
+def make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData, 
+                                  lambda_, epsilon, numEpochs, 
+                                  sizeTestData, numTrials, directory):
+  train_dict = {}
+  test_dict = {}
+  
+  for sizeQuantumData in rangeSizeTrainingData:
+    train_dict[f'{sizeQuantumData}'] = []
+    test_dict[f'{sizeQuantumData}'] = []
+
+  for sizeQuantumData in rangeSizeTrainingData:
+    fidelities = []
+    testFidelities = []
+
+    for i in range(numTrials):
+      dqnn = randomNetwork(qnnArch, sizeQuantumData + sizeTestData)
+      fidelity, testFidelity = trainOnSubset(dqnn[0], dqnn[1], dqnn[2], 
+                                             sizeQuantumData, 
+                                             sizeTestData, 
+                                             lambda_, epsilon, 
+                                             numEpochs)
+      fidelities.append(fidelity)
+      testFidelities.append(testFidelity)
+      print(f'Trial ({sizeQuantumData}, {i}) done.')
+
+    train_dict[f'{sizeQuantumData}'] = fidelities
+    test_dict[f'{sizeQuantumData}'] = testFidelities
+
+  train_df = pd.DataFrame(train_dict) 
+  test_df = pd.DataFrame(test_dict)
+  
+  train_df.to_csv(f'{directory}/dqnn_train_df.csv')
+  test_df.to_csv(f'{directory}/dqnn_test_df.csv')
