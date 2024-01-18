@@ -13,13 +13,14 @@ from cnn_functions import *
 
 """
 
-# Quantum data and DQNN specifications
+# Quantum data and DQNN, CNN specifications
 rangeSizeQuantumData = list(range(1, 21))
-numQubits = 1
-qnnArch = [numQubits, 2, numQubits]
+qnnArch = [2, 3, 4, 3, 2]
+model = NeuralNetwork23432
+model_name = '23432'
+directory = f'/home/zchua/thesis_code/csvs/{model_name}'
 
-
-# Training parameters
+# Training and testing specs
 learningRate = 0.1
 numEpochs = 1000
 sizeTestData = 10
@@ -29,47 +30,9 @@ loss_fns = [lossFidelityInverseSquared,
             nn.MSELoss(),
             lossMSEPhysInformed]
 
-
-# CNN model we're using
-model = NeuralNetwork121Linear
-model_name = '121LinearCNN'
-
-
-# Make the CSVs and save to specified directory
-directory = f'/home/zchua/thesis_code/csvs/{model_name}'
-# os.mkdir(directory)
 for loss_fn in loss_fns:
-  make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory)
-
-# Making DataFrame to store values
-# train_dict = {}
-# test_dict = {}
-# numTrials = 30
-
-# for sizeQuantumData in rangeSizeQuantumData:
-#   train_dict[f'{sizeQuantumData}'] = []
-#   test_dict[f'{sizeQuantumData}'] = []
-
-# for sizeQuantumData in rangeSizeQuantumData:
-#   fidelities = []
-#   testFidelities = []
-
-#   for i in range(numTrials):
-#     # cnn121 = NeuralNetwork121().to(device)
-#     cnn121 = NeuralNetwork121Linear().to(device)
-#     fidelity, testFidelity = trainModel(cnn121, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTestData, qnnArch)
-#     fidelities.append(fidelity.cpu().detach().numpy())
-#     testFidelities.append(testFidelity.cpu().detach().numpy())
-#     print(f'Trial ({sizeQuantumData}, {i}) done.')
-
-#   train_dict[f'{sizeQuantumData}'] = fidelities
-#   test_dict[f'{sizeQuantumData}'] = testFidelities
-
-# train_df = pd.DataFrame(train_dict)
-# test_df = pd.DataFrame(test_dict)
-
-# # import os  
-# train_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_train_df_12_2023.csv')
-# test_df.to_csv(f'/home/zchua/thesis_code/csvs/MSELoss_test_df_12_2023.csv')
-# # train_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_train_df_12_2023.csv')
-# # test_df.to_csv(f'/home/zchua/thesis_code/csvs/{loss_fn.__name__}_test_df_12_2023.csv')
+  make_cnn_generalisation_csvs(model, numTrials, 
+                               learningRate, loss_fn, 
+                               numEpochs, rangeSizeQuantumData, 
+                               sizeTestData, qnnArch, 
+                               directory)

@@ -257,10 +257,7 @@ def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpo
   train_df.to_csv(f'{directory}/{loss_fn_name}_train_df.csv')
   test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
 
-  return train_df, test_df
-
 """to-do
 * mixed states
-* larger NNs
 * try density ops instead of states
 """
