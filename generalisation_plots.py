@@ -8,15 +8,21 @@ import os
 sns.set()
 # os.mkdir()
 
-trainFile = '/home/zchua/thesis_code/csvs/121LinearCNN/lossMSEPhysInformed_train_df.csv'
-testFile = '/home/zchua/thesis_code/csvs/121LinearCNN/lossMSEPhysInformed_test_df.csv'
+loss_fns = ['lossFidelityInverseSquared', 
+            'lossFidelityInverseSquaredPhysInformed', 
+            'MSELoss',
+            'lossMSEPhysInformed']
+loss_fn = loss_fns[0]
+
+trainFile = f'/home/zchua/thesis_code/csvs/23432/{loss_fn}_train_df.csv'
+testFile = f'/home/zchua/thesis_code/csvs/23432/{loss_fn}_test_df.csv'
+cnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/{loss_fn}_train_df.csv')]
 
 train_df = pd.read_csv(trainFile)
 test_df = pd.read_csv(testFile)
 
-loss_fn = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find('_train_df')]
+# loss_fn = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find('_train_df')]
 numEpochs = 1000
-# loss_fn = 'MSELoss'
 
 training_x = list(train_df)[1:]
 training_y = [train_df[f'{sizeTrainingData}'].mean() for sizeTrainingData in training_x]
@@ -36,7 +42,7 @@ plt.ylabel('Fidelity')
 plt.legend()
 # plt.title(f'1-2-1 DQNN\nFidelity after {numEpochs} training epochs')
 # plt.savefig(f'/home/zchua/thesis_code/plots/121_dqnn_generalisation.pdf', bbox_inches='tight', dpi=300)
-plt.title(f'Fidelity for 4-8-4 CNN after {numEpochs} epochs\nLoss = {loss_fn}')
+plt.title(f'Fidelity for {cnn_arch} CNN after {numEpochs} epochs\nLoss = {loss_fn}')
 
 # plt.savefig(f'/home/zchua/thesis_code/plots/121_{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)
 # plt.close()
