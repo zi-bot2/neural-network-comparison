@@ -266,7 +266,7 @@ def lossMSEPhysInformed(preds, targets):
 
 """
 
-def make_cnn_generalisation_csvs_old(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
+def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
   if f'{loss_fn}' == 'MSELoss()':
     loss_fn_name = 'MSELoss'
   else:
@@ -302,42 +302,42 @@ def make_cnn_generalisation_csvs_old(model, numTrials, learningRate, loss_fn, nu
   test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
 
 
-def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
-  if f'{loss_fn}' == 'MSELoss()':
-    loss_fn_name = 'MSELoss'
-  else:
-    loss_fn_name = loss_fn.__name__
+# def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
+#   if f'{loss_fn}' == 'MSELoss()':
+#     loss_fn_name = 'MSELoss'
+#   else:
+#     loss_fn_name = loss_fn.__name__
   
-  print(f'Loss function: {loss_fn_name}')
+#   print(f'Loss function: {loss_fn_name}')
 
-  train_dict = {}
-  test_dict = {}
+#   train_dict = {}
+#   test_dict = {}
 
-  train_df = pd.DataFrame(train_dict)
-  test_df = pd.DataFrame(test_dict)
+#   train_df = pd.DataFrame(train_dict)
+#   test_df = pd.DataFrame(test_dict)
 
-  train_df.to_csv(f'{directory}/{loss_fn_name}_train_df.csv')
-  test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
+#   train_df.to_csv(f'{directory}/{loss_fn_name}_train_df.csv')
+#   test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
 
-  for sizeQuantumData in rangeSizeQuantumData:
-    train_fidelities = []
-    test_fidelities = []
+#   for sizeQuantumData in rangeSizeQuantumData:
+#     train_fidelities = []
+#     test_fidelities = []
 
-    for i in range(numTrials):
-      cnn = model().to(device)
-      fidelity, testFidelity = trainModel(cnn, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTestData, qnnArch)
-      train_fidelities.append(fidelity.cpu().detach().numpy())
-      test_fidelities.append(testFidelity.cpu().detach().numpy())
-      print(f'Trial ({sizeQuantumData}, {i}) done.')
+#     for i in range(numTrials):
+#       cnn = model().to(device)
+#       fidelity, testFidelity = trainModel(cnn, learningRate, loss_fn, numEpochs, sizeQuantumData, sizeTestData, qnnArch)
+#       train_fidelities.append(fidelity.cpu().detach().numpy())
+#       test_fidelities.append(testFidelity.cpu().detach().numpy())
+#       print(f'Trial ({sizeQuantumData}, {i}) done.')
     
-    train_df = pd.read_csv(f'{directory}/{loss_fn_name}_train_df.csv')
-    train_df[f'{sizeQuantumData}'] = train_fidelities
+#     train_df = pd.read_csv(f'{directory}/{loss_fn_name}_train_df.csv')
+#     train_df[f'{sizeQuantumData}'] = train_fidelities
 
-    test_df = pd.read_csv(f'{directory}/{loss_fn_name}_test_df.csv')
-    test_df[f'{sizeQuantumData}'] = test_fidelities
+#     test_df = pd.read_csv(f'{directory}/{loss_fn_name}_test_df.csv')
+#     test_df[f'{sizeQuantumData}'] = test_fidelities
 
-    train_df.to_csv(f'{directory}/{loss_fn_name}_train_df.csv')
-    test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
+#     train_df.to_csv(f'{directory}/{loss_fn_name}_train_df.csv')
+#     test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
 
 
 """to-do

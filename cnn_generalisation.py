@@ -4,11 +4,12 @@ from cnn_functions import *
 
 # Quantum data and DQNN, CNN specifications
 rangeSizeQuantumData = list(range(1, 21))
-qnnArch = [2, 3, 2]
-model = NeuralNetwork232Linear
-model_name = '232Linear'
+qnnArch = [2, 3, 4, 3, 2]
+model = NeuralNetwork23432Linear
+model_name = '23432Linear'
+print(model_name)
 directory = f'/home/zchua/thesis_code/csvs/{model_name}'
-# os.mkdir(directory)
+os.mkdir(directory)
 
 # Training and testing specs
 learningRate = 0.1
