@@ -461,6 +461,7 @@ def noisyDataTraining(qnnArch, initialUnitaries, trainingData, noisyData, lda, e
 
     return noisyDataPlot
 
+
 def make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData, 
                                   lambda_, epsilon, numEpochs, 
                                   sizeTestData, numTrials, directory):

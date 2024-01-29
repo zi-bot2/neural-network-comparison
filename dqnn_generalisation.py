@@ -1,14 +1,13 @@
 """# DQNN Generalisation"""
 
 from dqnn_functions import *
-import pandas as pd
 import os
 
 """## My version"""
 
 # Data specifications
 rangeSizeTrainingData = list(range(1, 21))
-qnnArch = [2, 3, 4, 3, 2]
+qnnArch = [2, 3, 2]
 
 # Training parameters
 lambda_ = 1
@@ -19,8 +18,8 @@ sizeTestData = 10
 # Generalisation specs
 numTrials = 30
 
-directory = '/home/zchua/thesis_code/csvs/23432'
-os.mkdir(directory)
+directory = '/home/zchua/thesis_code/csvs/232'
+# os.mkdir(directory)
 
 make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData, 
                                   lambda_, epsilon, numEpochs, 

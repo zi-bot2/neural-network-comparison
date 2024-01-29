@@ -119,7 +119,7 @@ class NeuralNetwork23432(nn.Module):
   def forward(self, x):
     return self.layer_4(self.relu(self.layer_3(self.relu(self.layer_2(self.relu(self.layer_1(x)))))))
 
-"""## Linear 121"""
+"""## Linear NN classes"""
 
 class NeuralNetwork121Linear(nn.Module):
   def __init__(self):
@@ -129,6 +129,38 @@ class NeuralNetwork121Linear(nn.Module):
 
   def forward(self, x):
     return self.layer_2((self.layer_1(x)))
+  
+
+class NeuralNetwork232Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**2), 2*(2**3)) # 2^{numQubits} is the complex vector, then represent real and imaginary parts separately as a 2^{numQubits} x 2 matrix, then flatten that into a (2^{numQubits} * 2) x 1 vector
+    self.layer_2 = nn.Linear(2*(2**3), 2*(2**2))
+
+  def forward(self, x):
+    return self.layer_2(self.layer_1(x))
+  
+
+class NeuralNetwork343Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**3), 2*(2**4))
+    self.layer_2 = nn.Linear(2*(2**4), 2*(2**3))
+
+  def forward(self, x):
+    return self.layer_2(self.layer_1(x))
+  
+class NeuralNetwork23432Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**2), 2*(2**3))
+    self.layer_2 = nn.Linear(2*(2**3), 2*(2**4))
+    self.layer_3 = nn.Linear(2*(2**4), 2*(2**3))
+    self.layer_4 = nn.Linear(2*(2**3), 2*(2**2))
+
+  def forward(self, x):
+    return self.layer_4(self.layer_3(self.layer_2(self.layer_1(x))))
+
 
 """## Training and testing"""
 
@@ -222,7 +254,19 @@ def lossMSEPhysInformed(preds, targets):
 
 """Generalisation functions"""
 
-def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
+
+"""We want to plot mean/media value of the fidelity vs sizeQuantumData
+
+0. Instantiate neural network
+1. Generate N quantum data training pairs
+2. Train the CNN on those pairs
+3. Keep final training and testing fidelity values after 1000 epochs
+4. Do Steps 0-3 30 times
+6. Plot the training fidelity median or mean and the test fidelity median or mean with uncertainty bars for each N.
+
+"""
+
+def make_cnn_generalisation_csvs_old(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
   if f'{loss_fn}' == 'MSELoss()':
     loss_fn_name = 'MSELoss'
   else:
@@ -257,10 +301,6 @@ def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpo
   train_df.to_csv(f'{directory}/{loss_fn_name}_train_df.csv')
   test_df.to_csv(f'{directory}/{loss_fn_name}_test_df.csv')
 
-"""to-do
-* mixed states
-* try density ops instead of states
-"""
 
 def make_cnn_generalisation_csvs(model, numTrials, learningRate, loss_fn, numEpochs, rangeSizeQuantumData, sizeTestData, qnnArch, directory):
   if f'{loss_fn}' == 'MSELoss()':

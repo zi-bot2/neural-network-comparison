@@ -21,7 +21,6 @@ cnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/{l
 train_df = pd.read_csv(trainFile)
 test_df = pd.read_csv(testFile)
 
-# loss_fn = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find('_train_df')]
 numEpochs = 1000
 
 training_x = list(train_df)[1:]
@@ -43,6 +42,5 @@ plt.legend()
 # plt.title(f'1-2-1 DQNN\nFidelity after {numEpochs} training epochs')
 # plt.savefig(f'/home/zchua/thesis_code/plots/121_dqnn_generalisation.pdf', bbox_inches='tight', dpi=300)
 plt.title(f'Fidelity for {cnn_arch} CNN after {numEpochs} epochs\nLoss = {loss_fn}')
-
 # plt.savefig(f'/home/zchua/thesis_code/plots/121_{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)
 # plt.close()
