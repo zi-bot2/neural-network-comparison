@@ -13,9 +13,10 @@ loss_fns = ['lossFidelityInverseSquared',
             'MSELoss',
             'lossMSEPhysInformed']
 loss_fn = loss_fns[0]
+model = '23432'
 
-trainFile = f'/home/zchua/thesis_code/csvs/23432/{loss_fn}_train_df.csv'
-testFile = f'/home/zchua/thesis_code/csvs/23432/{loss_fn}_test_df.csv'
+trainFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_train_df.csv'
+testFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_test_df.csv'
 cnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/{loss_fn}_train_df.csv')]
 
 train_df = pd.read_csv(trainFile)
