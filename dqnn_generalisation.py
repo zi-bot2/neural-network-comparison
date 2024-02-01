@@ -1,6 +1,7 @@
 """# DQNN Generalisation"""
 
 from dqnn_functions import *
+import pandas as pd
 import os
 
 """## My version"""
