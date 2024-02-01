@@ -12,12 +12,16 @@ loss_fns = ['lossFidelityInverseSquared',
             'lossFidelityInverseSquaredPhysInformed', 
             'MSELoss',
             'lossMSEPhysInformed']
-loss_fn = loss_fns[0]
-model = '23432'
+loss_fn = loss_fns[2]
+model = '232Linear'
 
 trainFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_train_df.csv'
 testFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_test_df.csv'
 cnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/{loss_fn}_train_df.csv')]
+
+# trainFile = f'/home/zchua/thesis_code/csvs/{model}/dqnn_train_df.csv'
+# testFile = f'/home/zchua/thesis_code/csvs/{model}/dqnn_test_df.csv'
+# qnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/dqnn_train_df.csv')]
 
 train_df = pd.read_csv(trainFile)
 test_df = pd.read_csv(testFile)
@@ -40,7 +44,7 @@ plt.ylim([0, 1.1])
 plt.xlabel('# training pairs')
 plt.ylabel('Fidelity')
 plt.legend()
-# plt.title(f'1-2-1 DQNN\nFidelity after {numEpochs} training epochs')
+# plt.title(f'{qnn_arch} DQNN\nFidelity after {numEpochs} training epochs')
 # plt.savefig(f'/home/zchua/thesis_code/plots/121_dqnn_generalisation.pdf', bbox_inches='tight', dpi=300)
 plt.title(f'Fidelity for {cnn_arch} CNN after {numEpochs} epochs\nLoss = {loss_fn}')
 # plt.savefig(f'/home/zchua/thesis_code/plots/121_{loss_fn}_generalisation.pdf', bbox_inches='tight', dpi=300)

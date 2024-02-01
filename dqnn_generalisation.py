@@ -8,7 +8,7 @@ import os
 
 # Data specifications
 rangeSizeTrainingData = list(range(1, 21))
-qnnArch = [2, 3, 2]
+qnnArch = [3, 4, 3]
 
 # Training parameters
 lambda_ = 1
@@ -19,7 +19,7 @@ sizeTestData = 10
 # Generalisation specs
 numTrials = 30
 
-directory = '/home/zchua/thesis_code/csvs/232'
+directory = '/home/zchua/thesis_code/csvs/343'
 # os.mkdir(directory)
 
 make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData, 
