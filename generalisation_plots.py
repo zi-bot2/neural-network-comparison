@@ -13,7 +13,7 @@ loss_fns = ['lossFidelityInverseSquared',
             'MSELoss',
             'lossMSEPhysInformed']
 loss_fn = loss_fns[2]
-model = '232'
+model = '343'
 
 # trainFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_train_df.csv'
 # testFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_test_df.csv'
