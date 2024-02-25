@@ -12,14 +12,14 @@ qnnArch = [3, 4, 3]
 
 # Training parameters
 lambda_ = 1
-epsilon = 0.1
+epsilon = 0.01
 numEpochs = 1000
 sizeTestData = 10
 
 # Generalisation specs
 numTrials = 30
 
-directory = '/home/zchua/thesis_code/csvs/343'
+directory = '/home/zchua/thesis_code/csvs/343/25_feb'
 # os.mkdir(directory)
 
 make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData, 

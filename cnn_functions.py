@@ -77,7 +77,7 @@ def makeQuantumData(qnnArch, sizeQuantumData, sizeTestingData): # Each element o
 
 """## Defining the classical neural network classes"""
 
-class NeuralNetwork121(nn.Module):
+class NeuralNetwork_4_8_4(nn.Module):
   def __init__(self):
     super().__init__()
     self.layer_1 = nn.Linear(2*(2**1), 2*(2**2)) # 2^{numQubits} is the complex vector, then represent real and imaginary parts separately as a 2^{numQubits} x 2 matrix, then flatten that into a (2^{numQubits} * 2) x 1 vector
@@ -87,7 +87,7 @@ class NeuralNetwork121(nn.Module):
   def forward(self, x):
     return self.layer_2(self.relu(self.layer_1(x)))
   
-class NeuralNetwork232(nn.Module):
+class NeuralNetwork_8_16_8(nn.Module):
   def __init__(self):
     super().__init__()
     self.layer_1 = nn.Linear(2*(2**2), 2*(2**3)) # 2^{numQubits} is the complex vector, then represent real and imaginary parts separately as a 2^{numQubits} x 2 matrix, then flatten that into a (2^{numQubits} * 2) x 1 vector
@@ -97,7 +97,7 @@ class NeuralNetwork232(nn.Module):
   def forward(self, x):
     return self.layer_2(self.relu(self.layer_1(x)))
   
-class NeuralNetwork343(nn.Module):
+class NeuralNetwork_16_32_16(nn.Module):
   def __init__(self):
     super().__init__()
     self.layer_1 = nn.Linear(2*(2**3), 2*(2**4))
@@ -107,7 +107,7 @@ class NeuralNetwork343(nn.Module):
   def forward(self, x):
     return self.layer_2(self.relu(self.layer_1(x)))
   
-class NeuralNetwork23432(nn.Module):
+class NeuralNetwork_8_16_32_16_8(nn.Module):
   def __init__(self):
     super().__init__()
     self.layer_1 = nn.Linear(2*(2**2), 2*(2**3))
@@ -121,7 +121,7 @@ class NeuralNetwork23432(nn.Module):
 
 """## Linear NN classes"""
 
-class NeuralNetwork121Linear(nn.Module):
+class NeuralNetwork_4_8_4_Linear(nn.Module):
   def __init__(self):
     super().__init__()
     self.layer_1 = nn.Linear(2*(2**1), 2*(2**2))
@@ -131,7 +131,7 @@ class NeuralNetwork121Linear(nn.Module):
     return self.layer_2((self.layer_1(x)))
   
 
-class NeuralNetwork232Linear(nn.Module):
+class NeuralNetwork_8_16_8_Linear(nn.Module):
   def __init__(self):
     super().__init__()
     self.layer_1 = nn.Linear(2*(2**2), 2*(2**3)) # 2^{numQubits} is the complex vector, then represent real and imaginary parts separately as a 2^{numQubits} x 2 matrix, then flatten that into a (2^{numQubits} * 2) x 1 vector
@@ -141,7 +141,7 @@ class NeuralNetwork232Linear(nn.Module):
     return self.layer_2(self.layer_1(x))
   
 
-class NeuralNetwork343Linear(nn.Module):
+class NeuralNetwork_16_32_16_Linear(nn.Module):
   def __init__(self):
     super().__init__()
     self.layer_1 = nn.Linear(2*(2**3), 2*(2**4))
@@ -150,8 +150,21 @@ class NeuralNetwork343Linear(nn.Module):
   def forward(self, x):
     return self.layer_2(self.layer_1(x))
   
+  
+class NeuralNetwork_8_16_32_16_8_Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(2*(2**2), 2*(2**3))
+    self.layer_2 = nn.Linear(2*(2**3), 2*(2**4))
+    self.layer_3 = nn.Linear(2*(2**4), 2*(2**3))
+    self.layer_4 = nn.Linear(2*(2**3), 2*(2**2))
+    self.relu = nn.ReLU()
 
-"""Comparison via equal number of parameters"""
+  def forward(self, x):
+    return self.layer_4(self.layer_3(self.layer_2(self.layer_1(x))))
+
+
+"""Comparison via equal number of parameters (linear only)"""
   
 class NeuralNetwork_4_10_4_Linear(nn.Module):
   def __init__(self):
@@ -162,6 +175,7 @@ class NeuralNetwork_4_10_4_Linear(nn.Module):
   def forward(self, x):
     return self.layer_2((self.layer_1(x)))
 
+
 class NeuralNetwork_8_41_8_Linear(nn.Module):
   def __init__(self):
     super().__init__()
@@ -171,15 +185,17 @@ class NeuralNetwork_8_41_8_Linear(nn.Module):
   def forward(self, x):
     return self.layer_2((self.layer_1(x)))
   
-class NeuralNetwork_12_163_12_Linear(nn.Module):
+
+class NeuralNetwork_16_123_16_Linear(nn.Module):
   def __init__(self):
     super().__init__()
-    self.layer_1 = nn.Linear(12, 163)
-    self.layer_2 = nn.Linear(163, 12)
+    self.layer_1 = nn.Linear(16, 123)
+    self.layer_2 = nn.Linear(123, 16)
 
   def forward(self, x):
     return self.layer_2((self.layer_1(x)))
   
+
 class NeuralNetwork_8_41_49_41_8_Linear(nn.Module):
   def __init__(self):
     super().__init__()
@@ -190,6 +206,7 @@ class NeuralNetwork_8_41_49_41_8_Linear(nn.Module):
 
   def forward(self, x):
     return self.layer_4(self.layer_3(self.layer_2(self.layer_1(x))))
+
 
 """## Training and testing"""
 

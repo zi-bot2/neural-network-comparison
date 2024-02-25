@@ -2,20 +2,7 @@
 
 from cnn_functions import *
 
-sizeTrainingData = 20
-sizeTestingData = 10
-qnnArch = [1, 2, 1]
-trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeTrainingData, sizeTestingData)
-
-learningRate = 0.1
-numEpochs = 1000
-
-loss_fns = [lossFidelityInverseSquared, 
-            lossFidelityInverseSquaredPhysInformed, 
-            nn.MSELoss(),
-            lossMSEPhysInformed]
-
-def plotLossVsEpoch(model, loss_fn, sizeTrainingData, sizeTestingData, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs):
+def plotLossVsEpoch(model, model_name, loss_fn, sizeTrainingData, sizeTestingData, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs):
   optimizer = torch.optim.SGD(model.parameters(), lr = learningRate)
   
   loss_dict = {'Epochs': list(range(numEpochs)), 'Training loss': [], 'Testing loss': [], 'Training fidelity': [], 'Testing fidelity': []}
@@ -35,15 +22,30 @@ def plotLossVsEpoch(model, loss_fn, sizeTrainingData, sizeTestingData, learningR
   plt.plot(loss_dict['Epochs'], loss_dict['Training fidelity'], label = 'Training fidelity')
   # plt.plot(loss_dict['Epochs'], loss_dict['Testing loss'], label = 'Testing loss')
   # plt.plot(loss_dict['Epochs'], loss_dict['Training loss'], label = 'Training loss')
-  plt.title(f'{model} <-> {qnnArch} DQNN\nLoss function = {loss_fn_name}\n# training pairs = {sizeTrainingData}\n# testing pairs = {sizeTestingData}\nLearning rate = {learningRate}')
+  plt.title(f'{model_name} <-> {qnnArch} DQNN\nLoss function = {loss_fn_name}\n# training pairs = {sizeTrainingData}\n# testing pairs = {sizeTestingData}\nLearning rate = {learningRate}')
   plt.legend()
   plt.xlabel('Epoch')
+  plt.ylim([0, 1.1])
   plt.show()
   # plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/{loss_fn.__name__}_performance.pdf', bbox_inches='tight', dpi=300)
   # # plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/MSELoss_performance.pdf', bbox_inches='tight', dpi=300)
-  plt.close()
+  # plt.close()
 
-model = NeuralNetwork121()
+sizeTrainingData = 20
+sizeTestingData = 10
+qnnArch = [1, 2, 1]
+trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeTrainingData, sizeTestingData)
+
+learningRate = 0.05
+numEpochs = 1000
+
+loss_fns = [lossFidelityInverseSquared, 
+            lossFidelityInverseSquaredPhysInformed, 
+            nn.MSELoss(),
+            lossMSEPhysInformed]
+
+model = NeuralNetwork_4_8_4_Linear()
+model_name = '4-8-4 Linear CNN'
 for loss_fn in loss_fns:
   model = model.to(device)
-  plotLossVsEpoch(model, loss_fn, sizeTrainingData, sizeTestingData, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs)
+  plotLossVsEpoch(model, model_name, loss_fn, sizeTrainingData, sizeTestingData, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs)

@@ -4,18 +4,18 @@ from dqnn_functions import *
 import seaborn as sns
 sns.set()
 
-numTrainingPairs = 5
+numTrainingPairs = 10
 numTestingPairs = 10
 qnnArch = [3, 4, 3]
 lambda_ = 1
-epsilon = 0.1
-numEpochs = 500
+epsilon = 0.01
+numEpochs = 1000
 
 network = randomNetwork(qnnArch, numTrainingPairs + numTestingPairs)
 
 plotlist121, testPlotlist121, currentUnitaries = qnnTrainingTesting(network[0], network[1], network[2], numTrainingPairs, numTestingPairs, lambda_, epsilon, numEpochs)
 
-plt.title(f'3-4-2 DQNN\n# training pairs = {numTrainingPairs}\n# testing pairs = {numTestingPairs}')
+plt.title(f'{qnnArch} DQNN\n# training pairs = {numTrainingPairs}\n# testing pairs = {numTestingPairs}\n Learning rate = {epsilon}')
 plt.plot(testPlotlist121[0], testPlotlist121[1], label='Testing')
 plt.plot(plotlist121[0], plotlist121[1], label='Training')
 plt.legend()
