@@ -150,17 +150,46 @@ class NeuralNetwork343Linear(nn.Module):
   def forward(self, x):
     return self.layer_2(self.layer_1(x))
   
-class NeuralNetwork23432Linear(nn.Module):
+
+"""Comparison via equal number of parameters"""
+  
+class NeuralNetwork_4_10_4_Linear(nn.Module):
   def __init__(self):
     super().__init__()
-    self.layer_1 = nn.Linear(2*(2**2), 2*(2**3))
-    self.layer_2 = nn.Linear(2*(2**3), 2*(2**4))
-    self.layer_3 = nn.Linear(2*(2**4), 2*(2**3))
-    self.layer_4 = nn.Linear(2*(2**3), 2*(2**2))
+    self.layer_1 = nn.Linear(4, 10)
+    self.layer_2 = nn.Linear(10, 4)
+
+  def forward(self, x):
+    return self.layer_2((self.layer_1(x)))
+
+class NeuralNetwork_8_41_8_Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(8, 41)
+    self.layer_2 = nn.Linear(41, 8)
+
+  def forward(self, x):
+    return self.layer_2((self.layer_1(x)))
+  
+class NeuralNetwork_12_163_12_Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(12, 163)
+    self.layer_2 = nn.Linear(163, 12)
+
+  def forward(self, x):
+    return self.layer_2((self.layer_1(x)))
+  
+class NeuralNetwork_8_41_49_41_8_Linear(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.layer_1 = nn.Linear(8, 41)
+    self.layer_2 = nn.Linear(41, 49)
+    self.layer_3 = nn.Linear(49, 41)
+    self.layer_4 = nn.Linear(41, 8)
 
   def forward(self, x):
     return self.layer_4(self.layer_3(self.layer_2(self.layer_1(x))))
-
 
 """## Training and testing"""
 
