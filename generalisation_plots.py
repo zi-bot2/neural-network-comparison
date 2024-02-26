@@ -12,7 +12,7 @@ loss_fns = ['lossFidelityInverseSquared',
             'lossFidelityInverseSquaredPhysInformed', 
             'MSELoss',
             'lossMSEPhysInformed']
-loss_fn = loss_fns[2]
+loss_fn = loss_fns[3]
 
 mode = 'cnn'
 numEpochs = 1000
@@ -20,10 +20,10 @@ lr = 'lr_pointzerofive'
 
 if mode == 'cnn':
     arch = 'NeuralNetwork_4_10_4_Linear'
+    cnn_arch = '4-10-4'
     model = f'linear_cnn/{arch}/{lr}'
     trainFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_train_df.csv'
     testFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_test_df.csv'
-    cnn_arch = '4-10-4'
     # cnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/{loss_fn}_train_df.csv')]
 
 if mode == 'qnn':
