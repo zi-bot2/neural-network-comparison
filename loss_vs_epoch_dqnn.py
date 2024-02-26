@@ -6,9 +6,9 @@ sns.set()
 
 numTrainingPairs = 10
 numTestingPairs = 10
-qnnArch = [3, 4, 3]
+qnnArch = [2, 3, 4, 3, 2]
 lambda_ = 1
-epsilon = 0.01
+epsilon = 0.03
 numEpochs = 1000
 
 network = randomNetwork(qnnArch, numTrainingPairs + numTestingPairs)
@@ -22,5 +22,5 @@ plt.legend()
 plt.ylim([0, 1.1])
 plt.xlabel('s')
 plt.ylabel('Fidelity[s]')
-# plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/dqnn_fidelity_performance_2.pdf', bbox_inches='tight', dpi=300)
-# plt.close()
+plt.savefig(f'/home/zchua/thesis_code/plots/tests/dqnn_2_3_4_3_2_lr_pointzerothree.pdf', bbox_inches='tight', dpi=300)
+plt.close()

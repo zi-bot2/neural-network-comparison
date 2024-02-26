@@ -4,15 +4,15 @@ from cnn_functions import *
 
 # Quantum data and DQNN, CNN specifications
 rangeSizeQuantumData = list(range(1, 21))
-qnnArch = [1, 2, 1]
-model = NeuralNetwork_4_8_4_Linear
-model_name = 'NeuralNetwork_4_8_4_Linear'
-lr = 'lr_pointzerofive'
+qnnArch = [3, 4, 3]
+model = NeuralNetwork_16_123_16_Linear
+model_name = 'NeuralNetwork_16_123_16_Linear'
+lr = 'lr_one'
 print(model_name)
 print(lr)
 
 # Training and testing specs
-learningRate = 0.05
+learningRate = 1
 numEpochs = 1000
 sizeTestData = 10
 numTrials = 30
@@ -21,6 +21,8 @@ loss_fns = [lossFidelityInverseSquared,
             nn.MSELoss(),
             lossMSEPhysInformed]
 
+directory = f'/home/zchua/thesis_code/csvs/linear_cnn/{model_name}'
+os.mkdir(directory)
 directory = f'/home/zchua/thesis_code/csvs/linear_cnn/{model_name}/{lr}'
 os.mkdir(directory)
 

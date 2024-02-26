@@ -33,19 +33,19 @@ def plotLossVsEpoch(model, model_name, loss_fn, sizeTrainingData, sizeTestingDat
 
 sizeTrainingData = 20
 sizeTestingData = 10
-qnnArch = [1, 2, 1]
+qnnArch = [3, 4, 3]
 trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeTrainingData, sizeTestingData)
 
-learningRate = 0.05
+learningRate = 1
 numEpochs = 1000
 
-loss_fns = [lossFidelityInverseSquared, 
-            lossFidelityInverseSquaredPhysInformed, 
-            nn.MSELoss(),
-            lossMSEPhysInformed]
+loss_fns = [nn.MSELoss(),
+            lossMSEPhysInformed,
+            lossFidelityInverseSquared, 
+            lossFidelityInverseSquaredPhysInformed]
 
-model = NeuralNetwork_4_8_4_Linear()
-model_name = '4-8-4 Linear CNN'
+model_name = '16-123-16 Linear CNN'
 for loss_fn in loss_fns:
+  model = NeuralNetwork_16_123_16_Linear()
   model = model.to(device)
   plotLossVsEpoch(model, model_name, loss_fn, sizeTrainingData, sizeTestingData, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs)
