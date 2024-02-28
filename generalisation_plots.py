@@ -14,24 +14,24 @@ loss_fns = ['lossFidelityInverseSquared',
             'lossMSEPhysInformed']
 loss_fn = loss_fns[3]
 
-mode = 'cnn'
+mode = 'qnn'
 numEpochs = 1000
-lr = 'lr_pointzerofive'
+lr = 'lr_pointone'
 
 if mode == 'cnn':
-    arch = 'NeuralNetwork_4_10_4_Linear'
-    cnn_arch = '4-10-4'
+    arch = 'NeuralNetwork_16_32_16_Linear'
+    cnn_arch = '16-32-16 Linear'
     model = f'linear_cnn/{arch}/{lr}'
     trainFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_train_df.csv'
     testFile = f'/home/zchua/thesis_code/csvs/{model}/{loss_fn}_test_df.csv'
     # cnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/{loss_fn}_train_df.csv')]
 
 if mode == 'qnn':
-    model = 'dqnn/23432'
+    model = 'dqnn/343'
     trainFile = f'/home/zchua/thesis_code/csvs/{model}/dqnn_train_df.csv'
     testFile = f'/home/zchua/thesis_code/csvs/{model}/dqnn_test_df.csv'
     # qnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/dqnn_train_df.csv')]
-    qnn_arch = '2-3-4-3-2'
+    qnn_arch = '3-4-3'
 
 train_df = pd.read_csv(trainFile)
 test_df = pd.read_csv(testFile)

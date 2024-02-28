@@ -4,9 +4,9 @@ from cnn_functions import *
 
 # Quantum data and DQNN, CNN specifications
 rangeSizeQuantumData = list(range(1, 21))
-qnnArch = [3, 4, 3]
-model = NeuralNetwork_16_123_16_Linear
-model_name = 'NeuralNetwork_16_123_16_Linear'
+qnnArch = [2, 3, 4, 3, 2]
+model = NeuralNetwork_8_41_49_41_8_Linear
+model_name = 'NeuralNetwork_8_41_49_41_8_Linear'
 lr = 'lr_one'
 print(model_name)
 print(lr)

@@ -44,8 +44,8 @@ loss_fns = [nn.MSELoss(),
             lossFidelityInverseSquared, 
             lossFidelityInverseSquaredPhysInformed]
 
-model_name = '16-123-16 Linear CNN'
+model_name = '16-32-16 Linear CNN'
 for loss_fn in loss_fns:
-  model = NeuralNetwork_16_123_16_Linear()
+  model = NeuralNetwork_16_32_16_Linear()
   model = model.to(device)
   plotLossVsEpoch(model, model_name, loss_fn, sizeTrainingData, sizeTestingData, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs)
