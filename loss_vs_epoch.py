@@ -36,7 +36,7 @@ sizeTestingData = 10
 qnnArch = [3, 4, 3]
 trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeTrainingData, sizeTestingData)
 
-learningRate = 1
+learningRate = 3
 numEpochs = 1000
 
 loss_fns = [nn.MSELoss(),
