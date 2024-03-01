@@ -31,21 +31,22 @@ def plotLossVsEpoch(model, model_name, loss_fn, sizeTrainingData, sizeTestingDat
   # # plt.savefig(f'/home/zchua/thesis_code/plots/master_talk/MSELoss_performance.pdf', bbox_inches='tight', dpi=300)
   # plt.close()
 
-sizeTrainingData = 20
+sizeTrainingData = 10
 sizeTestingData = 10
-qnnArch = [3, 4, 3]
+qnnArch = [1, 2, 1]
 trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeTrainingData, sizeTestingData)
 
-learningRate = 3
+learningRate = 0.1
 numEpochs = 1000
 
-loss_fns = [nn.MSELoss(),
-            lossMSEPhysInformed,
+loss_fns = [lossNormed,
             lossFidelityInverseSquared, 
-            lossFidelityInverseSquaredPhysInformed]
+            lossFidelityInverseSquaredPhysInformed,
+            nn.MSELoss(),
+            lossMSEPhysInformed,]
 
-model_name = '16-32-16 Linear CNN'
+model_name = '4-8-4 Linear CNN'
 for loss_fn in loss_fns:
-  model = NeuralNetwork_16_32_16_Linear()
+  model = NeuralNetwork_4_8_4_Linear()
   model = model.to(device)
   plotLossVsEpoch(model, model_name, loss_fn, sizeTrainingData, sizeTestingData, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs)
