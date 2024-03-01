@@ -6,21 +6,24 @@ sns.set()
 
 numTrainingPairs = 10
 numTestingPairs = 10
-qnnArch = [2, 3, 4, 3, 2]
+qnnArch = [3, 4, 3]
 lambda_ = 1
-epsilon = 0.03
+epsilon = 1
 numEpochs = 1000
+dqnn_arch = '3_4_3'
+lr = 'lr_one'
+print(f'dqnn_arch = {qnnArch}, learning rate = {epsilon}')
 
 network = randomNetwork(qnnArch, numTrainingPairs + numTestingPairs)
 
-plotlist121, testPlotlist121, currentUnitaries = qnnTrainingTesting(network[0], network[1], network[2], numTrainingPairs, numTestingPairs, lambda_, epsilon, numEpochs)
+plotlist, testPlotlist, currentUnitaries = qnnTrainingTesting(network[0], network[1], network[2], numTrainingPairs, numTestingPairs, lambda_, epsilon, numEpochs)
 
 plt.title(f'{qnnArch} DQNN\n# training pairs = {numTrainingPairs}\n# testing pairs = {numTestingPairs}\n Learning rate = {epsilon}')
-plt.plot(testPlotlist121[0], testPlotlist121[1], label='Testing')
-plt.plot(plotlist121[0], plotlist121[1], label='Training')
+plt.plot(testPlotlist[0], testPlotlist[1], label='Testing')
+plt.plot(plotlist[0], plotlist[1], label='Training')
 plt.legend()
 plt.ylim([0, 1.1])
 plt.xlabel('s')
 plt.ylabel('Fidelity[s]')
-plt.savefig(f'/home/zchua/thesis_code/plots/tests/dqnn_2_3_4_3_2_lr_pointzerothree.pdf', bbox_inches='tight', dpi=300)
+plt.savefig(f'/home/zchua/thesis_code/plots/tests/dqnn_{dqnn_arch}_{lr}.pdf', bbox_inches='tight', dpi=300)
 plt.close()
