@@ -273,7 +273,7 @@ def lossFidelityInverseSquaredPhysInformed_sub(pred, target):
 
 def lossNormed_sub(pred, target):
   fidelity = fidelityPureStates(pred, target)
-  return 0.1*((1 - fidelity))**2 + 0.9*((1 - norm(pred))**2)
+  return 0.5*((1 - fidelity))**2 + 0.5*((1 - norm(pred))**2)
 
 def lossMSEPhysInformed_sub(pred, target):
   loss = nn.MSELoss()
