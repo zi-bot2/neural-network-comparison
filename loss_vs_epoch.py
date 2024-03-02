@@ -17,7 +17,7 @@ def plotLossVsEpoch(model, loss_fn, learningRate, numEpochs, trainingInputs, tes
 
 sizeTrainingData = 10
 sizeTestingData = 10
-qnnArch = [1, 2, 1]
+qnnArch = [2, 3, 4, 3, 2]
 trainingInputs, testingInputs, trainingOutputs, testingOutputs = makeQuantumData(qnnArch, sizeTrainingData, sizeTestingData)
 
 loss_fns = [nn.MSELoss(),
@@ -28,13 +28,13 @@ loss_fns = [nn.MSELoss(),
 # loss_fns = [nn.MSELoss()]
 
 numEpochs = 1000
-learningRate = 0.3
-cfnn_arch = '4_8_4'
-model_name = '4-8-4'
-lr = 'lr_pointthree'
+learningRate = 1
+cfnn_arch = '8_41_49_41_8_Linear'
+model_name = '8-41-49-41-8 Linear'
+lr = 'lr_one'
 
 for loss_fn in loss_fns:
-  model = NeuralNetwork_4_8_4()
+  model = NeuralNetwork_8_41_49_41_8_Linear()
   model = model.to(device)
   
   if f'{loss_fn}' == 'MSELoss()':
@@ -42,7 +42,7 @@ for loss_fn in loss_fns:
   else:
     loss_fn_name = loss_fn.__name__
 
-  print(f'{model_name}, {lr}, {loss_fn_name}')
+  print(f'{model_name}, lr = {learningRate}, {loss_fn_name}')
   epochs, training_fidelities, testing_fidelities = plotLossVsEpoch(model, loss_fn, learningRate, numEpochs, trainingInputs, testingInputs, trainingOutputs, testingOutputs)
   
   plt.plot(epochs, testing_fidelities, label = 'Testing')
