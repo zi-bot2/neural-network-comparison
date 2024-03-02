@@ -6,12 +6,12 @@ sns.set()
 
 numTrainingPairs = 10
 numTestingPairs = 10
-qnnArch = [3, 4, 3]
+qnnArch = [2, 3, 4, 3, 2]
 lambda_ = 1
-epsilon = 1
+epsilon = 0.04
 numEpochs = 1000
-dqnn_arch = '3_4_3'
-lr = 'lr_one'
+dqnn_arch = '2_3_4_3_2'
+lr = 'lr_pointzerofour'
 print(f'dqnn_arch = {qnnArch}, learning rate = {epsilon}')
 
 network = randomNetwork(qnnArch, numTrainingPairs + numTestingPairs)
