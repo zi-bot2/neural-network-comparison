@@ -4,15 +4,15 @@ from cnn_functions import *
 
 # Quantum data and DQNN, CNN specifications
 rangeSizeQuantumData = list(range(1, 21))
-qnnArch = [2, 3, 4, 3, 2]
-model = NeuralNetwork_8_16_32_16_8_Linear
-model_name = 'NeuralNetwork_8_16_32_16_8_Linear'
-lr = 'lr_one'
+qnnArch = [2, 3, 2]
+model = NeuralNetwork_8_41_8_Linear
+model_name = 'NeuralNetwork_8_41_8_Linear'
+lr = 'lr_pointfive'
 print(model_name)
 print(lr)
 
 # Training and testing specs
-learningRate = 1
+learningRate = 0.5
 numEpochs = 1000
 sizeTestData = 10
 numTrials = 30

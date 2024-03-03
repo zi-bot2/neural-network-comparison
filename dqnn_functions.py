@@ -495,3 +495,15 @@ def make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData,
   
   train_df.to_csv(f'{directory}/dqnn_train_df.csv')
   test_df.to_csv(f'{directory}/dqnn_test_df.csv')
+
+def qnfl(dim_input_space, training_set_size):
+    s = training_set_size
+    d = dim_input_space
+    return 1 - ((1 / (d * (d+1))) * ((s**2) + d + 1))
+
+def make_qnfl_bound_plotlist(dim_input_space, training_set_sizes):
+    qnfl_values = []
+    for training_set_size in training_set_sizes:
+        qnfl_values.append(qnfl(dim_input_space, training_set_size))
+    
+    return training_set_sizes, qnfl_values

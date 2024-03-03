@@ -1,0 +1,20 @@
+from dqnn_functions import *
+import seaborn as sns
+sns.set()
+
+n_qubits = np.arange(1, 4)
+dim_input_spaces = np.array([2**n for n in n_qubits])
+
+for dim_input_space in dim_input_spaces:
+    training_set_sizes = np.arange(1, dim_input_space+1)
+    # print(dim_input_space, training_set_sizes)
+    training_set_sizes, qnfl_values = make_qnfl_bound_plotlist(dim_input_space, training_set_sizes)
+    for val in qnfl_values:
+        if val<0:
+            qnfl_values[qnfl_values.index(val)] = 0
+    plt.scatter(training_set_sizes, qnfl_values)
+    plt.title(f'Quantum no free lunch theorem bound for d={dim_input_space}')
+    plt.xlabel('Training set size, S')
+    plt.ylabel('Average risk')
+    plt.ylim(0, 1)
+    plt.show()
