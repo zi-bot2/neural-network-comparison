@@ -507,3 +507,5 @@ def make_qnfl_bound_plotlist(dim_input_space, training_set_sizes):
         qnfl_values.append(qnfl(dim_input_space, training_set_size))
     
     return training_set_sizes, qnfl_values
+
+# def calculate_risk_dqnn()
