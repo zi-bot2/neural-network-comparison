@@ -29,8 +29,8 @@ loss_fns = [nn.MSELoss(),
 
 numEpochs = 1000
 learningRate = 1
-cfnn_arch = '8_41_49_41_8_Linear'
-model_name = '8-41-49-41-8 Linear'
+cfnn_arch = '8_16_32_16_8_Linear'
+model_name = '8-16-32-16-8 Linear'
 lr = 'lr_one'
 
 for loss_fn in loss_fns:
