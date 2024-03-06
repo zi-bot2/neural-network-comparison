@@ -8,19 +8,23 @@ import os
 
 # Data specifications
 rangeSizeTrainingData = list(range(1, 21))
-qnnArch = [2, 3, 4, 3, 2]
+qnnArch = [3, 4, 3]
 
 # Training parameters
 lambda_ = 1
-epsilon = 0.03
+epsilon = 0.05
 numEpochs = 1000
 sizeTestData = 10
 
 # Generalisation specs
-numTrials = 30
+numTrials = 2
 
-directory = '/home/zchua/thesis_code/csvs/dqnn/23432/lr_pointzerothree'
+directory = '/home/zchua/thesis_code/csvs/dqnn/343/lr_pointzerofive'
 os.mkdir(directory)
+directory = '/home/zchua/thesis_code/csvs/dqnn/343/lr_pointzerofive/test'
+os.mkdir(directory)
+# directory = '/home/zchua/thesis_code/csvs/dqnn/23432/lr_pointzerothree'
+# os.mkdir(directory)
 
 make_dqnn_generalisation_csvs(qnnArch, rangeSizeTrainingData, 
                                   lambda_, epsilon, numEpochs, 
