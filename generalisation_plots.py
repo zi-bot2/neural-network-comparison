@@ -14,7 +14,7 @@ loss_fn = loss_fns[1]
 
 mode = 'qnn'
 numEpochs = 1000
-lr = 'lr_pointzerofive'
+lr = 'lr_pointzerothree'
 
 if mode == 'cnn':
     arch = 'NeuralNetwork_8_41_8_Linear'
@@ -26,9 +26,9 @@ if mode == 'cnn':
     # cnn_arch = trainFile[len('/home/zchua/thesis_code/csvs/') : trainFile.find(f'/{loss_fn}_train_df.csv')]
 
 if mode == 'qnn':
-    model = '343'
-    nn_name = '3-4-3'
-    save_name = 'dqnn_3_4_3'
+    model = '23432'
+    nn_name = '2-3-4-3-2'
+    save_name = 'dqnn_2_3_4_3_2'
     trainFile = f'/home/zchua/thesis_code/csvs/dqnn/{model}/{lr}/dqnn_train_df.csv'
     testFile = f'/home/zchua/thesis_code/csvs/dqnn/{model}/{lr}/dqnn_test_df.csv'
 
