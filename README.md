@@ -11,10 +11,10 @@ The learning task I compare them with is that of learning an unknown unitary. Th
 * PyTorch
 
 ## What each file does
-* cnn_functions.py: Defines all the relevant functions for instantiating, training and testing the CFNNs, including the random generation of training and testing data, the classes for the neural network architectures I wanted to study, and the loss functions.
-* cnn_generalisation.py: Generates CSVs of the generalisation data and stores it in the specified directory.
-* dqnn_functions.py: Similarly defines all the relevant functions for the DQNNs, and dqnn_generalisation.py generates the CSVs.
-* generalisation_plots.py: Generates generalisation plots from the generalisation CSVs and stores them in the specified directory.
-* loss_vs_epoch.py: Generates loss vs. epoch plots for the CFNNs (specifically quantum fidelity vs epoch plots, but the fidelity is maximised exactly when each of the loss functions I've defined are minimised) and stores them in the specified directory.
-* loss_vs_epoch_dqnn.py: Generates fidelity vs. epoch plots for the DQNNs and stores them in the specified directory.
-* qnfl_plotting.py: Generates the plot of the "quantum no free lunch" (QNFL) bound for the specified DQNN architecture. The QNFL bound is the theoretical bound on how well the DQNN can generalise for this particular learning task.
+* `cnn_functions.py`: Defines all the relevant functions for instantiating, training and testing the CFNNs, including the random generation of training and testing data, the classes for the neural network architectures I wanted to study, and the loss functions.
+* `cnn_generalisation.py`: Generates CSVs of the generalisation data and stores it in the specified directory.
+* `dqnn_functions.py`: Similarly defines all the relevant functions for the DQNNs, and dqnn_generalisation.py generates the CSVs.
+* `generalisation_plots.py`: Generates generalisation plots from the generalisation CSVs and stores them in the specified directory.
+* `loss_vs_epoch.py`: Generates loss vs. epoch plots for the CFNNs (specifically quantum fidelity vs epoch plots, but the fidelity is maximised exactly when each of the loss functions I've defined are minimised) and stores them in the specified directory.
+* `loss_vs_epoch_dqnn.py`: Generates fidelity vs. epoch plots for the DQNNs and stores them in the specified directory.
+* `qnfl_plotting.py`: Generates the plot of the "quantum no free lunch" (QNFL) bound for the specified DQNN architecture. The QNFL bound is the theoretical bound on how well the DQNN can generalise for this particular learning task.
